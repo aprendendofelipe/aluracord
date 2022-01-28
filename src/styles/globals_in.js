@@ -1,0 +1,58 @@
+import { createGlobalStyle } from 'styled-components'
+import theme from './theme'
+
+const GlobalStyle = createGlobalStyle`
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+        font-family: Roboto, 'Open Sans', sans-serif;
+    }
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+    * {
+        box-sizing: border-box;
+        list-style: none;
+    }
+
+    html, body, #__next {
+        min-height: 100vh;
+        display: flex;
+        flex: 1;
+        
+    }
+    #__next {
+        flex: 1;
+    }
+    #__next > * {
+        flex: 1;
+        * {
+            &::-webkit-scrollbar-thumb {
+                border: 4px solid transparent;
+                border-radius: 10px;
+                background-color: ${theme.colors.neutrals[500]};
+                background-clip: content-box;
+                -webkit-background-clip: content-box;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background-clip: border-box;
+                -webkit-background-clip: border-box;
+            }
+            
+            &::-webkit-scrollbar-corner {
+                background-color: transparent;
+            }
+
+            &::-webkit-scrollbar {
+                width: 12px;
+                height: 12px;
+                background-color: transparent;
+            }
+        }
+    }
+`
+
+export default GlobalStyle

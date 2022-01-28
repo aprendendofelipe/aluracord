@@ -1,7 +1,7 @@
 import { Head_app } from '../components/Head'
-import GlobalStyle from '../styles/globals'
+import GlobalStyle from '../styles/globals_in'
 
-function App({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
   // const apolloClient = useApollo(pageProps)
 
   return (<>
@@ -12,5 +12,3 @@ function App({ Component, pageProps }) {
     {/* </ApolloProvider> */}
     </>)
 }
-
-export default App

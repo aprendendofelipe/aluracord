@@ -1,10 +1,11 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components'
-import appConfig from '../../config.json'
-import { PageSubtitle } from '../components/Head';
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { PageSubtitle } from '../components/Head'
 import theme from '../styles/theme'
 
 
-function Titulo(props) {
+function Title(props) {
   const Tag = props.tag || 'h1';
   return (
     <>
@@ -20,21 +21,9 @@ function Titulo(props) {
   );
 }
 
-// Componente React
-// function HomePage() {
-//     // JSX
-//     return (
-//         <div>
-//             <GlobalStyle />
-//             <Titulo tag="h2">Boas vindas de volta!</Titulo>
-//             <h2>Discord - Alura Matrix</h2>
-//         </div>
-//     )
-// }
-// export default HomePage
-
-export default function PaginaInicial() {
-  const username = 'peas';
+export default function Home() {
+  const [username, setUsername] = useState('')
+  const router = useRouter()
 
   return (
     <>
@@ -65,17 +54,23 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={function (e) {
+              e.preventDefault()
+              router.push(`/servers?username=${username}`)
+            }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
               width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
             }}
           >
-            <Titulo tag="h2">Boas vindas de volta!</Titulo>
+            <Title tag="h2">Seja bem vindo(a) à</Title>
             <Text variant="body3" styleSheet={{ marginBottom: '32px', color: theme.colors.neutrals[300] }}>
-              {appConfig.name}
+              {process.env.NEXT_PUBLIC_APP_NAME}
             </Text>
 
             <TextField
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -117,13 +112,14 @@ export default function PaginaInicial() {
               minHeight: '240px',
             }}
           >
+            
             <Image
               styleSheet={{
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
               alt={username}
-              src={`https://github.com/${username}.png`}
+              src={username ? `https://github.com/${username}.png` : "/github_sunglasses.svg"}
             />
             <Text
               variant="body4"
