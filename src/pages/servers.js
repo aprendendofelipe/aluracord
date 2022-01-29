@@ -5,14 +5,14 @@ import theme from '../styles/theme'
 import Chat from '../components/chat'
 import { PageSubtitle } from '../components/Head'
 import { useRouter } from 'next/router'
-import servers from '../components/servers'
 
-export default function ChatPage() {
+
+export default function ServersPage() {
   const router = useRouter()
   const username = router.query.username
   const [screen, setScreen] = useState('main')
   const [iframeSrc, setIframeSrc] = useState('')
-
+  
   return (<>
     <PageSubtitle>Servidores</PageSubtitle>
     <HomeScreen>  
@@ -39,6 +39,24 @@ export default function ChatPage() {
 
 function SideMenu(props) {
   // const [servers, setServers] = useState([])
+  const servers = [
+    {
+      url: 'https://aluracord-lfs9902.vercel.app/',
+      name: 'teste',
+      imgSrc: 'https://aluracord-lfs9902.vercel.app/_next/static/media/background.ff86ee12.png'
+    },
+    {
+        url: `https://aluracord-matrix-lake.vercel.app/`,
+        // url: `https://aluracord-matrix-lake.vercel.app/chat?username=${props.username}`,
+        name: 'welãoverso',
+        imgSrc: 'https://aluracord-matrix-lake.vercel.app/img/banner.png'
+    },
+    {
+        url: `https://alura-disc-mn99k87ay-leonardoandrad3.vercel.app/chat?user=${props.username}`,
+        name: 'Security - Community (ProtectionScan)',
+        imgSrc: 'https://www.securityreport.com.br/wp-content/uploads/2021/09/businessman-protecting-data-personal-information-cyber-security-data-concept-padlock-and-internet-te.jpg'
+      },
+  ]
 
   return (
     <>
@@ -155,6 +173,7 @@ const SideBar = styled.div`
   }
 
   button {
+    cursor: pointer;
     background-color: ${theme.colors.neutrals[200]};
     display: flex;
     border: 0;
