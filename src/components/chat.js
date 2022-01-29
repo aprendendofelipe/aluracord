@@ -4,7 +4,7 @@ import theme from '../styles/theme'
 import { ButtonSendSticker } from './ButtonSendSticker'
 import styled from 'styled-components'
 import { convertMessage } from '../utils/convertmessages'
-import { DeleteMessage, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
+import { DeleteMessage, getMessages, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
 
 export default function ChatPage(props) {
   const [message, setMessage] = useState('')
@@ -20,6 +20,10 @@ export default function ChatPage(props) {
         ]
       })
     })
+
+    getMessages()
+    .then((msgs)=> setMessages(msgs))
+    
 
     return () => {
       subscription.unsubscribe();
@@ -44,7 +48,8 @@ export default function ChatPage(props) {
   async function handleDeleteMessage(msgToDelete) {
     if (props.username == msgToDelete.from & window.confirm(`Tem certeza de que deseja apagar a mensagem abaixo? \n \n ${msgToDelete.text}`)) {
       try {
-        const id = await DeleteMessage()
+        const id = await DeleteMessage(msgToDelete)
+        console.log("id ",id)
         if (msgToDelete.id == id) {
           setMessages((messages) => messages.filter(msg => msg.id != id))          
         } else {

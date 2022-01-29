@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import theme from '../styles/theme'
 import Chat from '../components/chat'
 import { PageSubtitle } from '../components/Head'
-import supabaseClient, {getServers, getMessages, ServersRealTime} from '../utils/supabase'
+import {getServers, getMessages, ServersRealTime} from '../utils/supabase'
 
 
 export default function ServersPage(props) {

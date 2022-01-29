@@ -66,7 +66,8 @@ export async function DeleteMessage(msgToDelete) {
         .delete()
         .match({ id: msgToDelete.id })
         .then(({ data }) => {
-            id = data.id
+            console.log('data: ', data)
+            id = data[0].id
         })
     return id
 }
