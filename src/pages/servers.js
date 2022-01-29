@@ -17,23 +17,22 @@ export default function ServersPage() {
     <PageSubtitle>Servidores</PageSubtitle>
     <HomeScreen>  
       <SideBar>
-    <SideMenu
-      username={username}
-      setScreen={setScreen}
-      setIframeSrc={setIframeSrc}
-    />
-  </SideBar>
-  
-  {screen === 'main'
-        ? <Chat username={username}/>
-    : <iframe
-      height={'100%'}
-      width={'100%'}
-    frameBorder={0}
-    allowFullScreen={false}
-      // src={`https://aluracord-lfs9902.vercel.app/chat?username=${username}`} />
-      src={iframeSrc} />}
-  </HomeScreen>
+        <SideMenu
+          username={username}
+          setScreen={setScreen}
+          setIframeSrc={setIframeSrc}
+        />
+      </SideBar>  
+      {screen === 'main'
+            ? <Chat username={username}/>
+        : <iframe
+          height={'100%'}
+          width={'100%'}
+        frameBorder={0}
+        allowFullScreen={false}
+          // src={`https://aluracord-lfs9902.vercel.app/chat?username=${username}`} />
+          src={iframeSrc} />}
+    </HomeScreen>
   </>)
 }
 
@@ -56,18 +55,17 @@ function SideMenu(props) {
         imgSrc: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fart.ngfiles.com%2Fimages%2F1313000%2F1313953_eltrainanim_revvin-up-chainsaw-man.gif'
     },
     {
-        url: `https://aluratrix.vercel.app/chat?username=${props.username}`,
-        name: 'Aluratrix - Lima',
-        imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
-    },
-    {
       url: 'https://aluracord-lfs9902.vercel.app/',
       name: 'teste',
       imgSrc: 'https://aluracord-lfs9902.vercel.app/_next/static/media/background.ff86ee12.png'
     },
     {
+        url: `https://aluratrix.vercel.app/chat?username=${props.username}`,
+        name: 'Aluratrix - Lima',
+        imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
+    },
+    {
         url: `https://aluracord-matrix-lake.vercel.app/`,
-        // url: `https://aluracord-matrix-lake.vercel.app/chat?username=${props.username}`,
         name: 'welãoverso',
         imgSrc: 'https://aluracord-matrix-lake.vercel.app/img/banner.png'
     },
@@ -89,8 +87,8 @@ function SideMenu(props) {
       <button onClick={()=>{props.setScreen('main')}} >
         <svg
           aria-hidden="false"
-          width={24}
-          height={24}
+          width={36}
+          height={36}
           viewBox="0 0 24 24">
           <path
             fill={theme.colors.primary[500]}
@@ -145,23 +143,23 @@ const HomeScreen = styled.div`
   background-blend-mode: multiply;
   color: ${theme.colors.neutrals['000']};
   @media(min-width: 640px) {
-    grid-template-columns: 60px 1fr;
+    grid-template-columns: 72px 1fr;
   }
   @media(max-width: 639px) {
-    grid-template-rows: 60px 1fr;
+    grid-template-rows: 72px 1fr;
   }
 `
 
 const SideBar = styled.div`
   background-color: ${theme.colors.neutrals[700]};
   display: flex;
-  height: 60px;
+  height: 72px;
   width: 100%;
   /* align-items: center; */
   padding-top: 12px;
   padding-left: 12px;
   border-radius: 5px;
-  gap: 8px;
+  gap: 12px;
   @media(min-width: 640px) {
     flex-direction: column;
     height: calc(100vh - 32px);
@@ -174,19 +172,19 @@ const SideBar = styled.div`
     display: flex;
     margin: 0;
     padding: 0;
-    gap: 8px;
+    gap: 12px;
     overflow: auto;
     @media(min-width: 640px) {
       flex-direction: column;
       max-height: 100%;
-      height: calc(100vh - 130px);
+      height: calc(100vh - 158px);
       padding-top: 8px;
       padding-bottom: 8px;
     }
     @media(max-width: 639px) {
       flex-direction: row;
       max-height: 100%;
-      width: calc(100vw - 130px);
+      width: calc(100vw - 158px);
       padding-left: 8px;
       padding-right: 8px;
     }
@@ -199,8 +197,8 @@ const SideBar = styled.div`
     border: 0;
     border-radius: 50%;
     box-shadow: none;
-    height: 36px;
-    width: 36px;
+    height: 48px;
+    width: 48px;
     padding: 0;
     align-items: center;
     justify-content: center;

@@ -76,32 +76,28 @@ export default function ChatPage(props) {
     .insert([
       message
     ])
-    // .then(({ data }) => {
-    //   console.log('Criando mensagem: ', data);
-    //   // setListaDeMensagens([
-    //   //   data[0],
-    //   //   ...listaDeMensagens,
-    //   // ]);
-    // });
-    // setMessages((messages) => [message, ...messages])
     setMessage('')
   }
 
+  function handleDeleteMessage(msgToDelete) {
+    if (props.username == msgToDelete.from & window.confirm(`Tem certeza de que deseja apagar a mensagem abaixo? \n \n ${msgToDelete.text}`)) {
+      try {
+        supabaseClient
+          .from('messages')
+          .delete()
+          .match({ id: msgToDelete.id })
+          .then(({ data }) => {
+            setMessages((messages)=>messages.filter(msg => msgToDelete.id != msg.id))
+          })
+      } catch (e) {
+        console.error(e)
+        window.alert(`Ocorreu um erro ao tentar apagar a mensagem: \n\n ${msgToDelete.text}`)
+      }
+    }
+  };
+
   return (
-    <ChatBox
-      // styleSheet={{
-      //   display: 'flex',
-      //   flexDirection: 'column',
-      //   flex: 1,
-      //   boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-      //   borderRadius: '5px',
-      //   backgroundColor: theme.colors.neutrals[700],
-      //   height: '100%',
-      //   maxWidth: 'calc(100vw - 108px)',
-      //   maxHeight: 'calc(100vh - 32px)',
-      //   padding: '32px',
-      // }}
-    >
+    <ChatBox>
       <Header />
       <Box
         styleSheet={{
@@ -113,13 +109,14 @@ export default function ChatPage(props) {
           flexDirection: 'column',
           borderRadius: '5px',
           padding: '16px',
-          boxShadow: `0 2px 10px green`,
+          boxShadow: `inset 0 2px 6px green`,
         }}
       >
-
-
-        <Messages messages={messages} username={props.username}/>
-
+        <Messages
+          messages={messages}
+          username={props.username}
+          handleDeleteMessage={handleDeleteMessage}
+        />
         <Box
           as="form"
           styleSheet={{
@@ -205,6 +202,7 @@ function Messages(props) {
         flex: 1,
         color: theme.colors.neutrals["000"],
         marginBottom: '16px',
+        paddingInlineStart: '0px',
       }}
     >{props.messages.length > 0 && props.messages.map((msg) => {
       return (
@@ -220,35 +218,59 @@ function Messages(props) {
             }
           }}
         >
+        <Box
+          styleSheet={{
+            marginBottom: '8px',
+          }}
+        >
           <Box
             styleSheet={{
-              marginBottom: '8px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              justifyContent: 'space-between',
+              flex: '1',
             }}
           >
-            <Image
-              styleSheet={{
-                width: '20px',
-                height: '20px',
-                borderRadius: '50%',
-                display: 'inline-block',
-                marginRight: '8px',
-              }}
-              alt={msg.from}
-              src={`https://github.com/${msg.from}.png`}
-            />
-            <Text tag="strong">
-              {msg.from}
-            </Text>
-            <Text
-              styleSheet={{
-                fontSize: '10px',
-                marginLeft: '8px',
-                color: theme.colors.neutrals[300],
-              }}
-              tag="span"
-            >
-              {(new Date(msg.created_at).toLocaleString())}
-            </Text>
+            <Box>
+              <Image
+                styleSheet={{
+                  width: '20px',
+                  height: '20px',
+                  borderRadius: '50%',
+                  display: 'inline-block',
+                  marginRight: '8px',
+                }}
+                alt={msg.from}
+                src={`https://github.com/${msg.from}.png`}
+              />
+              <Text tag="strong">
+                {msg.from}
+              </Text>
+              <Text
+                styleSheet={{
+                  fontSize: '10px',
+                  marginLeft: '8px',
+                  color: theme.colors.neutrals[300],
+                }}
+                tag="span"
+              >
+                {(new Date(msg.created_at).toLocaleString()).slice(0,-3)}
+                  </Text>
+                  </Box>
+              {props.username == msg.from && <Box
+                onClick={(e) => {
+                  e.preventDefault()
+                  props.handleDeleteMessage(msg)
+                }}
+                title={`Apagar mensagem`}
+                styleSheet={{
+                  padding: '2px 15px',
+                  cursor: 'pointer',
+                }}
+              >
+                ✖️
+              </Box>}
+            </Box>
           </Box>
           {/* {msg.text} */}
           {msg.text.startsWith(':sticker:')
@@ -283,7 +305,7 @@ const ChatBox = styled.div`
   max-height: calc(100vh - 108px);
   padding: 24px;
   @media(min-width: 640px) {
-    max-width: calc(100vw - 108px);
-    max-height: calc(100vh - 32px);
+    max-width: calc(100vw - 120px);
+    max-height: calc(100vh - 44px);
   }
 `
