@@ -41,6 +41,26 @@ function SideMenu(props) {
   // const [servers, setServers] = useState([])
   const servers = [
     {
+        url: `https://alura-disc-mn99k87ay-leonardoandrad3.vercel.app/chat?user=${props.username}`,
+        name: 'Security - Community (ProtectionScan)',
+        imgSrc: 'https://www.securityreport.com.br/wp-content/uploads/2021/09/businessman-protecting-data-personal-information-cyber-security-data-concept-padlock-and-internet-te.jpg'
+    },
+    {
+        url: `https://aluracord-ochre.vercel.app/chat?username=${props.username}`,
+        name: 'gui-lfm',
+        imgSrc: 'https://cdn2.unrealengine.com/egs-whiletruelearn-ludenio-g1c-00-1920x1080-5b8971ca03fe.jpg'
+    },
+    {
+        url: `https://aluracord-chainsawman.vercel.app/chat?username=${props.username}`,
+        name: 'Aluracord - Chainsaw Man',
+        imgSrc: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fart.ngfiles.com%2Fimages%2F1313000%2F1313953_eltrainanim_revvin-up-chainsaw-man.gif'
+    },
+    {
+        url: `https://aluratrix.vercel.app/chat?username=${props.username}`,
+        name: 'Aluratrix - Lima',
+        imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
+    },
+    {
       url: 'https://aluracord-lfs9902.vercel.app/',
       name: 'teste',
       imgSrc: 'https://aluracord-lfs9902.vercel.app/_next/static/media/background.ff86ee12.png'
@@ -52,18 +72,8 @@ function SideMenu(props) {
         imgSrc: 'https://aluracord-matrix-lake.vercel.app/img/banner.png'
     },
     {
-        url: `https://alura-disc-mn99k87ay-leonardoandrad3.vercel.app/chat?user=${props.username}`,
-        name: 'Security - Community (ProtectionScan)',
-        imgSrc: 'https://www.securityreport.com.br/wp-content/uploads/2021/09/businessman-protecting-data-personal-information-cyber-security-data-concept-padlock-and-internet-te.jpg'
-    },
-    {
-        url: `https://aluracord-ochre.vercel.app/chat?username=${props.username}`,
-        name: 'gui-lfm',
-        imgSrc: 'https://cdn2.unrealengine.com/egs-whiletruelearn-ludenio-g1c-00-1920x1080-5b8971ca03fe.jpg'
-    },
-    {
-        url: `https://aluratrix.vercel.app/chat?user=${props.username}`,
-        name: 'Aluratrix - Lima',
+        url: `https://aluracordv2.vercel.app/`,
+        name: 'Gu-Parlandim',
         imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
     },
   ]
