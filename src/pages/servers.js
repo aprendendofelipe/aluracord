@@ -55,7 +55,17 @@ function SideMenu(props) {
         url: `https://alura-disc-mn99k87ay-leonardoandrad3.vercel.app/chat?user=${props.username}`,
         name: 'Security - Community (ProtectionScan)',
         imgSrc: 'https://www.securityreport.com.br/wp-content/uploads/2021/09/businessman-protecting-data-personal-information-cyber-security-data-concept-padlock-and-internet-te.jpg'
-      },
+    },
+    {
+        url: `https://aluracord-ochre.vercel.app/chat?username=${props.username}`,
+        name: 'gui-lfm',
+        imgSrc: 'https://cdn2.unrealengine.com/egs-whiletruelearn-ludenio-g1c-00-1920x1080-5b8971ca03fe.jpg'
+    },
+    {
+        url: `https://aluratrix.vercel.app/chat?user=${props.username}`,
+        name: 'Aluratrix - Lima',
+        imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
+    },
   ]
 
   return (
