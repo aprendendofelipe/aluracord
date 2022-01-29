@@ -6,7 +6,7 @@ export default function Custom404() {
   const username = router.query.username
 
   useEffect(() => {
-    if (username.length > 0) {
+    if (username?.length > 0) {
       router.replace(`/servers?username=${username}`)
     } else {
       router.replace("/")
