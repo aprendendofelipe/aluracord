@@ -15,7 +15,7 @@ export function ButtonSendSticker(props) {
       <Button
         styleSheet={{
           borderRadius: '50%',
-          padding: '0 3px 0 0',
+          padding: '0',
           minWidth: '34px',
           minHeight: '34px',
           fontSize: '20px',
@@ -42,48 +42,54 @@ export function ButtonSendSticker(props) {
             borderRadius: '5px',
             position: 'absolute',
             backgroundColor: theme.colors.neutrals[800],
-            width: {
-              xs: '200px',
-              sm: '290px',
-            },
-            height: '300px',
-            right: '30px',
-            bottom: '30px',
-            padding: '16px',
+            width: '60vw',
+            height: '60vh',
+            right: '5px',
+            bottom: '34px',
+            padding: '8px',
             boxShadow: 'rgba(4, 4, 5, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
           }}
           onClick={() => setOpenState(false)}
         >
-          <Text
-            styleSheet={{
-              color: theme.colors.neutrals["000"],
-              fontWeight: 'bold',
+          <Box
+              styleSheet={{
+              padding: '8px',
+              justifyContent: 'space-between'
             }}
           >
-            Stickers
-          </Text>
+            <Text
+              styleSheet={{
+                color: theme.colors.neutrals["000"],
+                fontWeight: 'bold',
+              }}
+            >
+              Stickers
+            </Text>
+          </Box>
           <Box
             tag="ul"
             styleSheet={{
               display: 'flex',
+              margin: '0',
               flexWrap: 'wrap',
               justifyContent: 'space-between',
               flex: 1,
-              paddingTop: '16px',
               overflow: 'scroll',
+              paddingInlineStart: '0px',
             }}
           >
             {appConfig.stickers.map((sticker) => (
               <Text
                 onClick={() => {
-                  // console.log('[DENTRO DO COMPONENTE] Clicou no sticker:', sticker);
                   if (Boolean(props.onStickerClick)) {
                     props.onStickerClick(sticker);
                   }
                 }}
                 tag="li" key={sticker}
                 styleSheet={{
-                  width: '50%',
+                  width: '160px',
+                  maxWidth: '50%',
+                  maxHeight: '160px',
                   borderRadius: '5px',
                   padding: '10px',
                   focus: {
@@ -94,7 +100,7 @@ export function ButtonSendSticker(props) {
                   }
                 }}
               >
-                <Image src={sticker} />
+                <Image src={sticker} alt={sticker} />
               </Text>
             ))}
           </Box>

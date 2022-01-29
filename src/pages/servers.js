@@ -81,12 +81,12 @@ function SideMenu(props) {
         </svg>
       </button>
       <ul>
-      <li key={1}>
+      <li key={"a"}>
               <button onClick={() => {
                 props.setScreen('main')
               }} >
                 <img
-                  src="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
+                  src="https://deltime.com.br/wp-content/uploads/2019/03/seguran%C3%A7a-de-datacenters-Deltime.jpg"
                   alt="main chat"
                 />
                 {/* {server.name} */}
@@ -142,12 +142,6 @@ const HomeScreen = styled.div`
   height: 100%;
   width: 100%;
   padding: 16px;
-  background-color: ${theme.colors.primary[500]};
-  background-image: url(https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-blend-mode: multiply;
-  color: ${theme.colors.neutrals['000']};
   @media(min-width: 640px) {
     grid-template-columns: 72px 1fr;
   }

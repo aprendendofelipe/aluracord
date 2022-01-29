@@ -76,7 +76,7 @@ export default function ChatPage(props) {
           flexDirection: 'column',
           borderRadius: '5px',
           padding: '16px',
-          boxShadow: `inset 0 2px 6px green`,
+          boxShadow: `inset 0 2px 6px ${theme.colors.primary[400]}`,
         }}
       >
         <Messages
@@ -115,8 +115,8 @@ export default function ChatPage(props) {
             }}
           />
           <ButtonSendSticker
-              onStickerClick={(sticker) => {
-                handleNewMessage(':sticker: ' + sticker);
+            onStickerClick={(sticker) => {
+              handleNewMessage(':sticker: ' + sticker);
             }}
           />
           <Button
@@ -235,7 +235,7 @@ function Messages(props) {
                   cursor: 'pointer',
                 }}
               >
-                ✖️
+                🗑️
               </Box>}
             </Box>
           </Box>
@@ -269,10 +269,10 @@ const ChatBox = styled.div`
   background-color: ${theme.colors.neutrals[700]};
   height: 100%;
   max-width: calc(100vw - 32px);
-  max-height: calc(100vh - 108px);
+  max-height: calc(100vh - 120px);
   padding: 24px;
   @media(min-width: 640px) {
     max-width: calc(100vw - 120px);
-    max-height: calc(100vh - 44px);
+    max-height: calc(100vh - 32px);
   }
 `
