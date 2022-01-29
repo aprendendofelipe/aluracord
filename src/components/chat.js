@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import theme from '../styles/theme'
 import { createClient } from '@supabase/supabase-js'
 import { ButtonSendSticker } from '../../src/components/ButtonSendSticker'
+import styled from 'styled-components'
 
 
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -87,19 +88,19 @@ export default function ChatPage(props) {
   }
 
   return (
-    <Box
-      styleSheet={{
-        display: 'flex',
-        flexDirection: 'column',
-        flex: 1,
-        boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
-        borderRadius: '5px',
-        backgroundColor: theme.colors.neutrals[700],
-        height: '100%',
-        maxWidth: 'calc(100vw - 108px)',
-        maxHeight: 'calc(100vh - 32px)',
-        padding: '32px',
-      }}
+    <ChatBox
+      // styleSheet={{
+      //   display: 'flex',
+      //   flexDirection: 'column',
+      //   flex: 1,
+      //   boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
+      //   borderRadius: '5px',
+      //   backgroundColor: theme.colors.neutrals[700],
+      //   height: '100%',
+      //   maxWidth: 'calc(100vw - 108px)',
+      //   maxHeight: 'calc(100vh - 32px)',
+      //   padding: '32px',
+      // }}
     >
       <Header />
       <Box
@@ -171,7 +172,7 @@ export default function ChatPage(props) {
             />
         </Box>
       </Box>
-    </Box>
+    </ChatBox>
   )
 }
 
@@ -269,3 +270,20 @@ function Messages(props) {
     </Box>
   )
 }
+
+const ChatBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
+  border-radius: 5px;
+  background-color: ${theme.colors.neutrals[700]};
+  height: 100%;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 108px);
+  padding: 24px;
+  @media(min-width: 640px) {
+    max-width: calc(100vw - 108px);
+    max-height: calc(100vh - 32px);
+  }
+`
