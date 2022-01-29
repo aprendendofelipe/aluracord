@@ -11,7 +11,6 @@ const Background = styled.div`
     background-image: url(https://deltime.com.br/wp-content/uploads/2019/03/seguran%C3%A7a-de-datacenters-Deltime.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-
 `
 
 export default Background
