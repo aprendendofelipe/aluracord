@@ -27,7 +27,9 @@ export default function Home() {
 
   return (
     <>
-      <PageSubtitle />
+      <PageSubtitle>
+        Login
+      </PageSubtitle>
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
