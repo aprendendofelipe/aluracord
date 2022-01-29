@@ -1,18 +1,35 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 import theme from '../styles/theme'
 import Chat from '../components/chat'
 import { PageSubtitle } from '../components/Head'
-import { useRouter } from 'next/router'
+import supabaseClient, {getServers, getMessages, ServersRealTime} from '../utils/supabase'
 
 
-export default function ServersPage() {
+export default function ServersPage(props) {
   const router = useRouter()
   const username = router.query.username
   const [screen, setScreen] = useState('main')
   const [iframeSrc, setIframeSrc] = useState('')
-  
+  const [servers, setServers] = useState(() => props.servers)
+
+  useEffect(() => {
+    const subscription = ServersRealTime((server) => {
+      setServers((servers) => {
+        return [
+          server,
+          ...servers,
+        ]
+      });
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    }
+  }, [])
+
   return (<>
     <PageSubtitle>Servidores</PageSubtitle>
     <HomeScreen>  
@@ -21,10 +38,14 @@ export default function ServersPage() {
           username={username}
           setScreen={setScreen}
           setIframeSrc={setIframeSrc}
+          servers={servers}
         />
       </SideBar>  
       {screen === 'main'
-            ? <Chat username={username}/>
+        ? <Chat
+          username={username}
+          messages={props.messages}
+        />
         : <iframe
           height={'100%'}
           width={'100%'}
@@ -37,44 +58,7 @@ export default function ServersPage() {
 }
 
 function SideMenu(props) {
-  // const [servers, setServers] = useState([])
-  const servers = [
-    {
-        url: `https://alura-disc-mn99k87ay-leonardoandrad3.vercel.app/chat?user=${props.username}`,
-        name: 'Security - Community (ProtectionScan)',
-        imgSrc: 'https://www.securityreport.com.br/wp-content/uploads/2021/09/businessman-protecting-data-personal-information-cyber-security-data-concept-padlock-and-internet-te.jpg'
-    },
-    {
-        url: `https://aluracord-ochre.vercel.app/chat?username=${props.username}`,
-        name: 'gui-lfm',
-        imgSrc: 'https://cdn2.unrealengine.com/egs-whiletruelearn-ludenio-g1c-00-1920x1080-5b8971ca03fe.jpg'
-    },
-    {
-        url: `https://aluracord-chainsawman.vercel.app/chat?username=${props.username}`,
-        name: 'Aluracord - Chainsaw Man',
-        imgSrc: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fart.ngfiles.com%2Fimages%2F1313000%2F1313953_eltrainanim_revvin-up-chainsaw-man.gif'
-    },
-    {
-      url: 'https://aluracord-lfs9902.vercel.app/',
-      name: 'teste',
-      imgSrc: 'https://aluracord-lfs9902.vercel.app/_next/static/media/background.ff86ee12.png'
-    },
-    {
-        url: `https://aluratrix.vercel.app/chat?username=${props.username}`,
-        name: 'Aluratrix - Lima',
-        imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
-    },
-    {
-        url: `https://aluracord-matrix-lake.vercel.app/`,
-        name: 'welãoverso',
-        imgSrc: 'https://aluracord-matrix-lake.vercel.app/img/banner.png'
-    },
-    {
-        url: `https://aluracordv2.vercel.app/`,
-        name: 'Gu-Parlandim',
-        imgSrc: 'https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg'
-    },
-  ]
+  const servers = props.servers
 
   return (
     <>
@@ -112,7 +96,7 @@ function SideMenu(props) {
           return (
             <li key={server.url}>
               <button onClick={() => {
-                props.setIframeSrc(server.url)
+                props.setIframeSrc(server.autoUser ? server.url + props.username : server.url)
                 props.setScreen('chat')
               }} >
                 <img
@@ -127,6 +111,28 @@ function SideMenu(props) {
       </ul>
     </>
   )
+}
+
+
+export async function getStaticProps() {
+  let promises = []
+  promises.push(getMessages().catch(() => []))
+  promises.push(getServers().catch(() => []))
+
+  const responses = await Promise.all(promises)
+  .then((responses) => {
+    return {
+        props: {
+          messages: responses[0],
+          servers: responses[1]
+        },
+    }
+  })
+    
+  return {
+    ...responses,
+    revalidate: 1
+  }
 }
 
 

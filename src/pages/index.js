@@ -58,7 +58,9 @@ export default function Home() {
             as="form"
             onSubmit={function (e) {
               e.preventDefault()
-              router.push(`/servers?username=${username}`)
+              if (username) {
+                router.push(`/servers?username=${username}`)
+              }
             }}
             styleSheet={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',

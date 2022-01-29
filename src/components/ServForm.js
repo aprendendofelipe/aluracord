@@ -1,25 +1,64 @@
 import { Box, Text, TextField, Image, Button } from '@skynexui/components'
 import { useEffect, useState } from 'react'
 import theme from '../styles/theme'
-import { ButtonSendSticker } from './ButtonSendSticker'
+import { createClient } from '@supabase/supabase-js'
+import { ButtonSendSticker } from '../../src/components/ButtonSendSticker'
 import styled from 'styled-components'
-import { convertMessage } from '../utils/convertmessages'
-import { DeleteMessage, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
+
+
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
+const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function escutaMensagensEmTempoReal(adicionaMensagem) {
+  return supabaseClient
+    .from('messages')
+    .on('INSERT', (respostaLive) => {
+      adicionaMensagem(respostaLive.new);
+    })
+    .subscribe();
+}
+
+function convertMessage(msg) { 
+  return {
+    from: msg.de,
+    text: msg.texto,
+    id: msg.id,
+    created_at: msg.created_at
+  }
+}
+
+function convertMessages(data) {
+  let msgs = []
+  if (data.length > 1) {
+    msgs = data.map(msg => convertMessage(msg))
+  }
+  return msgs
+}
 
 export default function ChatPage(props) {
   const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState(() => props.messages)
+  const [messages, setMessages] = useState([])
 
   useEffect(() => {
-    const subscription = MessagesRealTime((message) => {
+    supabaseClient
+      .from('messages')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .then(({ data }) => {
+        const msgs = convertMessages(data)
+        setMessages(msgs);
+      });
+
+    const subscription = escutaMensagensEmTempoReal((message) => {
       const msg = convertMessage(message)
       setMessages((valorAtualDaLista) => {
         return [
           msg,
           ...valorAtualDaLista,
         ]
-      })
-    })
+      });
+    });
 
     return () => {
       subscription.unsubscribe();
@@ -32,31 +71,30 @@ export default function ChatPage(props) {
       de: props.username,
       texto: newMessage,
     }
-    try {
-      await SaveNewMessage(message)
-      setMessage('')
-    } catch (e) {
-      console.error(e)
-      window.alert(`Ocorreu um erro ao tentar salvar a mensagem: \n\n ${message.text}`)
-    }
+    await supabaseClient
+    .from('messages')
+    .insert([
+      message
+    ])
+    setMessage('')
   }
 
-  async function handleDeleteMessage(msgToDelete) {
+  function handleDeleteMessage(msgToDelete) {
     if (props.username == msgToDelete.from & window.confirm(`Tem certeza de que deseja apagar a mensagem abaixo? \n \n ${msgToDelete.text}`)) {
       try {
-        const id = await DeleteMessage()
-        if (msgToDelete.id == id) {
-          setMessages((messages) => messages.filter(msg => msg.id != id))          
-        } else {
-          throw new error(`Ocorreu um erro ao tentar apagar a mensagem: \n\n ${msgToDelete.text}`)
-        }
-        
+        supabaseClient
+          .from('messages')
+          .delete()
+          .match({ id: msgToDelete.id })
+          .then(({ data }) => {
+            setMessages((messages)=>messages.filter(msg => msgToDelete.id != msg.id))
+          })
       } catch (e) {
         console.error(e)
         window.alert(`Ocorreu um erro ao tentar apagar a mensagem: \n\n ${msgToDelete.text}`)
       }
     }
-  }
+  };
 
   return (
     <ChatBox>
