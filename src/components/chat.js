@@ -1,10 +1,11 @@
-import { Box, Text, TextField, Image, Button } from '@skynexui/components'
+import { Box, Text, TextField, Button } from '@skynexui/components'
 import { useEffect, useState } from 'react'
 import theme from '../styles/theme'
 import { ButtonSendSticker } from './ButtonSendSticker'
 import styled from 'styled-components'
 import { convertMessage } from '../utils/convertmessages'
 import { DeleteMessage, getMessages, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
+import Messages from './Messages'
 
 export default function ChatPage(props) {
   const [message, setMessage] = useState('')
@@ -155,109 +156,6 @@ function Header() {
         />
       </Box>
     </>
-  )
-}
-
-function Messages(props) {
-  return (
-    <Box
-      tag="ul"
-      styleSheet={{
-        overflow: 'auto',
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        flex: 1,
-        color: theme.colors.neutrals["000"],
-        marginBottom: '16px',
-        paddingInlineStart: '0px',
-      }}
-    >{props.messages.length > 0 && props.messages.map((msg) => {
-      return (
-        <Text
-          key={msg.id}
-          tag="li"
-          styleSheet={{
-            borderRadius: '5px',
-            padding: '6px',
-            marginBottom: '12px',
-            wordWrap: 'break-word',
-            hover: {
-              backgroundColor: theme.colors.neutrals[700],
-            }
-          }}
-        >
-          <Box
-            styleSheet={{
-              marginBottom: '8px',
-            }}
-          >
-            <Box
-              styleSheet={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'space-between',
-                flex: '1',
-              }}
-            >
-              <Box>
-                <Image
-                  styleSheet={{
-                    width: '20px',
-                    height: '20px',
-                    borderRadius: '50%',
-                    display: 'inline-block',
-                    marginRight: '8px',
-                  }}
-                  alt={msg.from}
-                  src={`https://github.com/${msg.from}.png`}
-                />
-                <Text tag="strong">
-                  {msg.from}
-                </Text>
-                <Text
-                  styleSheet={{
-                    fontSize: '10px',
-                    marginLeft: '8px',
-                    color: theme.colors.neutrals[300],
-                  }}
-                  tag="span"
-                >
-                  {(new Date(msg.created_at).toLocaleString()).slice(0,-3)}
-                    </Text>
-                    </Box>
-                {props.username == msg.from && <Box
-                  onClick={(e) => {
-                    e.preventDefault()
-                    props.handleDeleteMessage(msg)
-                  }}
-                  title={`Apagar mensagem`}
-                  styleSheet={{
-                    padding: '2px',
-                    cursor: 'pointer',
-                  }}
-                >
-                  🗑️
-                </Box>}
-              </Box>
-            </Box>
-            {/* {msg.text} */}
-            {msg.text.startsWith(':sticker:')
-                ? (
-                <Image
-                  src={msg.text.replace(':sticker: ', '')}
-                  alt={msg.from}
-                  styleSheet={{
-                    maxWidth: '160px',
-                    maxHeight: '160px'
-                  }}
-                />
-                )
-                : (
-                  msg.text
-                )}
-        </Text>)
-      })}
-    </Box>
   )
 }
 
