@@ -1,26 +1,28 @@
-# Discórdia - A Aluracord do Felipe
+# 📱 Servidores da Discórdia
 
-Agregador de projetos realizados durante a última edição da Imersão React da Alura.
+## 📟 Aluracord - Imersão React
 
-<a href="https://discordia-gamma.vercel.app/" target="_blank"><img src='https://discordia-gamma.vercel.app/login-screen.png'/></a>  
+Agregador de projetos Aluracord realizados durante a última edição da Imersão React da Alura.
 
-A principal funcionalidade é a possibilidade de enviar mensagem para servidores de outros participantes da Imersão direto <a href="https://discordia-gamma.vercel.app/" target="_blank">nessa página.</a>  
+[<img src='https://discordia-gamma.vercel.app/login-screen.png'/>](https://discordia-gamma.vercel.app/)  
 
-<a href="https://discordia-gamma.vercel.app/" target="_blank"><img src='https://discordia-gamma.vercel.app/main-screen.png'/></a>  
+A principal funcionalidade é a possibilidade de enviar mensagem para servidores de outros participantes da Imersão direto [nessa página.](https://discordia-gamma.vercel.app/)  
 
-## Visite aqui
-<a href="https://discordia-gamma.vercel.app/" target="_blank">discordia-gamma.vercel.app</a>  
+[<img src='https://discordia-gamma.vercel.app/main-screen.png'/>](https://discordia-gamma.vercel.app/)  
 
-## Adicionando o seu servidor ao projeto
-Por enquanto basta enviar uma mensagem diretamente no primeiro servidor do <a href="https://discordia-gamma.vercel.app/" target="_blank">sistema.</a>  
+## 👁️‍🗨️ Visite aqui
+[discordia-gamma.vercel.app](https://discordia-gamma.vercel.app/)  
+
+## 🤖 Adicionando o seu servidor ao projeto
+Por enquanto basta enviar uma mensagem diretamente no primeiro servidor do [sistema.](https://discordia-gamma.vercel.app/)  
 Então informe o endereço do seu servidor na Vercel e do seu GitHub.  
 Em breve disponibilizarei uma tela de cadastro.  
 
-## Implemente o seu próprio agregador de servidores
+## ⌨️ Implemente o seu próprio agregador de servidores
 
 - Clone esse repositório.  
-- Crie seu projeto no <a href="https://supabase.com/" target="_blank">Supabase.</a>  
-- Preencha seu arquivo .env na raiz do projeto com os dados do projeto no <a href="https://supabase.com/" target="_blank">Supabase.</a>  
+- Crie seu projeto no [Supabase.](https://supabase.com/)  
+- Preencha seu arquivo .env na raiz do projeto com os dados do projeto no [Supabase.](https://supabase.com/)  
 
 ```
 NEXT_PUBLIC_APP_NAME = App_Name
@@ -50,7 +52,7 @@ imgSrc - text
 autoUser - bool
 ```
 
-- Crie seu projeto na <a href="https://vercel.com/" target="_blank">Vercel</a> vinculando com seu repositório no GitHub.  
-- Adicione as variáveis de ambiente dentro do seu projeto na <a href="https://vercel.com/" target="_blank">Vercel.</a>  
-- Faça deploy do seu projeto na <a href="https://vercel.com/" target="_blank">Vercel.</a>  
+- Crie seu projeto na [Vercel](https://vercel.com/) vinculando com seu repositório no GitHub.  
+- Adicione as variáveis de ambiente dentro do seu projeto na [Vercel.](https://vercel.com/)  
+- Faça deploy do seu projeto na [Vercel.](https://vercel.com/)  
 - Por fim, se quiser, ajude a melhorar esse projeto.  
