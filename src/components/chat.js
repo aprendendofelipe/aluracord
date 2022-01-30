@@ -180,82 +180,83 @@ function Messages(props) {
             borderRadius: '5px',
             padding: '6px',
             marginBottom: '12px',
+            wordWrap: 'break-word',
             hover: {
               backgroundColor: theme.colors.neutrals[700],
             }
           }}
         >
-        <Box
-          styleSheet={{
-            marginBottom: '8px',
-          }}
-        >
           <Box
             styleSheet={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              flex: '1',
+              marginBottom: '8px',
             }}
           >
-            <Box>
-              <Image
-                styleSheet={{
-                  width: '20px',
-                  height: '20px',
-                  borderRadius: '50%',
-                  display: 'inline-block',
-                  marginRight: '8px',
-                }}
-                alt={msg.from}
-                src={`https://github.com/${msg.from}.png`}
-              />
-              <Text tag="strong">
-                {msg.from}
-              </Text>
-              <Text
-                styleSheet={{
-                  fontSize: '10px',
-                  marginLeft: '8px',
-                  color: theme.colors.neutrals[300],
-                }}
-                tag="span"
-              >
-                {(new Date(msg.created_at).toLocaleString()).slice(0,-3)}
-                  </Text>
-                  </Box>
-              {props.username == msg.from && <Box
-                onClick={(e) => {
-                  e.preventDefault()
-                  props.handleDeleteMessage(msg)
-                }}
-                title={`Apagar mensagem`}
-                styleSheet={{
-                  padding: '2px',
-                  cursor: 'pointer',
-                }}
-              >
-                🗑️
-              </Box>}
+            <Box
+              styleSheet={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                justifyContent: 'space-between',
+                flex: '1',
+              }}
+            >
+              <Box>
+                <Image
+                  styleSheet={{
+                    width: '20px',
+                    height: '20px',
+                    borderRadius: '50%',
+                    display: 'inline-block',
+                    marginRight: '8px',
+                  }}
+                  alt={msg.from}
+                  src={`https://github.com/${msg.from}.png`}
+                />
+                <Text tag="strong">
+                  {msg.from}
+                </Text>
+                <Text
+                  styleSheet={{
+                    fontSize: '10px',
+                    marginLeft: '8px',
+                    color: theme.colors.neutrals[300],
+                  }}
+                  tag="span"
+                >
+                  {(new Date(msg.created_at).toLocaleString()).slice(0,-3)}
+                    </Text>
+                    </Box>
+                {props.username == msg.from && <Box
+                  onClick={(e) => {
+                    e.preventDefault()
+                    props.handleDeleteMessage(msg)
+                  }}
+                  title={`Apagar mensagem`}
+                  styleSheet={{
+                    padding: '2px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  🗑️
+                </Box>}
+              </Box>
             </Box>
-          </Box>
-          {/* {msg.text} */}
-          {msg.text.startsWith(':sticker:')
-              ? (
-              <Image
-                src={msg.text.replace(':sticker: ', '')}
-                alt={msg.from}
-                styleSheet={{
-                  maxWidth: '160px',
-                  maxHeight: '160px'
-                }}
-              />
-              )
-              : (
-                msg.text
-              )}
+            {/* {msg.text} */}
+            {msg.text.startsWith(':sticker:')
+                ? (
+                <Image
+                  src={msg.text.replace(':sticker: ', '')}
+                  alt={msg.from}
+                  styleSheet={{
+                    maxWidth: '160px',
+                    maxHeight: '160px'
+                  }}
+                />
+                )
+                : (
+                  msg.text
+                )}
         </Text>)
-    })}
+      })}
     </Box>
   )
 }
