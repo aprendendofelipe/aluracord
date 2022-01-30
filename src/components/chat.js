@@ -4,7 +4,7 @@ import theme from '../styles/theme'
 import { ButtonSendSticker } from './ButtonSendSticker'
 import styled from 'styled-components'
 import { convertMessage } from '../utils/convertmessages'
-import { DeleteMessage, getMessages, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
+import { DeleteMessage, getMessages, getServers, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
 import Messages from './Messages'
 
 export default function ChatPage(props) {
@@ -24,7 +24,6 @@ export default function ChatPage(props) {
 
     getMessages(messages)
     .then((msgs)=> setMessages(msgs))
-    
 
     return () => {
       subscription.unsubscribe();

@@ -27,6 +27,9 @@ export default function ServersPage(props) {
         ]
       });
     });
+    
+    getServers(servers)
+    .then((srvs)=> setServers(srvs))
 
     return () => {
       subscription.unsubscribe();

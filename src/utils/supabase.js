@@ -10,19 +10,19 @@ export async function getMessages(messagesOld=[]) {
     const timeLastMessage = messagesOld[0]?.created_at
     let messages = []
     try {
-        if (!!timeLastMessage) {
+        if (!timeLastMessage) {
             await supabaseClient
-            .from('messages')
-            .select('*')
-            .gte('created_at', timeLastMessage)
-            .order('created_at', { ascending: false })
-            .then(({ data }) => {
-                messages = convertMessages(data)
+                .from('messages')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .then(({ data }) => {
+                    messages = convertMessages(data)
             })
         } else {
             await supabaseClient
                 .from('messages')
                 .select('*')
+                .gt('created_at', timeLastMessage)
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
                     messages = convertMessages(data)
@@ -32,26 +32,37 @@ export async function getMessages(messagesOld=[]) {
         console.error(e)
         return []
     }
-    return [...messages,
-    ...messagesOld]
+    return [...messages, ...messagesOld]
 }
 
 
-export async function getServers() {
+export async function getServers(serversOld=[]) {
+    const timeLastServer = serversOld[0]?.created_at
     let servers = []
     try {
-        await supabaseClient
-            .from('servers')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .then(({ data }) => {
-                servers = data
-            })
+        if (!timeLastServer){
+            await supabaseClient
+                .from('servers')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .then(({ data }) => {
+                    servers = data
+                })
+        } else {
+            await supabaseClient
+                .from('servers')
+                .select('*')
+                .gt('created_at', timeLastServer)
+                .order('created_at', { ascending: false })
+                .then(({ data }) => {
+                    servers = data
+                })
+        }
     } catch (e) {
         console.error(e)
         return []
     }
-    return servers
+    return [...servers, ...serversOld]
 }
 
 export function ServersRealTime(addSrv) {
