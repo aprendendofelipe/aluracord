@@ -5,7 +5,8 @@ import { useRouter } from 'next/router'
 import theme from '../styles/theme'
 import Chat from '../components/chat'
 import { PageSubtitle } from '../components/Head'
-import {getServers, getMessages, ServersRealTime} from '../utils/supabase'
+import { getServers, getMessages, ServersRealTime } from '../utils/supabase'
+import { useWarnStars } from '../utils/starsquestion'
 
 
 export default function ServersPage(props) {
@@ -14,6 +15,8 @@ export default function ServersPage(props) {
   const [screen, setScreen] = useState('main')
   const [iframeSrc, setIframeSrc] = useState('')
   const [servers, setServers] = useState(() => props.servers)
+
+  useWarnStars()
 
   useEffect(() => {
     const subscription = ServersRealTime((server) => {
