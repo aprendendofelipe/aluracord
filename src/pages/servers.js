@@ -140,12 +140,13 @@ const HomeScreen = styled.div`
   display: grid;
   height: 100%;
   width: 100%;
-  padding: 16px;
   @media(min-width: 640px) {
+    padding: 16px;
     grid-gap: 16px;
     grid-template-columns: 72px 1fr;
   }
   @media(max-width: 639px) {
+    padding: 6px;
     grid-gap: 6px;
     grid-template-rows: 72px 1fr;
   }
@@ -167,7 +168,7 @@ const SideBar = styled.div`
   }
   @media(max-width: 639px) {
     flex-direction: row;
-    width: calc(100vw - 32px);
+    width: calc(100vw - 12px);
   }
   ul {
     display: flex;
@@ -185,7 +186,7 @@ const SideBar = styled.div`
     @media(max-width: 639px) {
       flex-direction: row;
       max-height: 100%;
-      width: calc(100vw - 158px);
+      width: calc(100vw - 138px);
       padding-left: 8px;
       padding-right: 8px;
     }

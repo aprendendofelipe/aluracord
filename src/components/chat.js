@@ -143,7 +143,7 @@ export default function ChatPage(props) {
 function Header() {
   return (
     <>
-      <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+      <Box styleSheet={{ width: '100%', marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
         <Text variant='heading5'>
           Discórdia
         </Text>
@@ -269,10 +269,11 @@ const ChatBox = styled.div`
   border-radius: 5px;
   background-color: ${theme.colors.neutrals[700]};
   height: 100%;
-  max-width: calc(100vw - 32px);
-  max-height: calc(100vh - 120px);
-  padding: 24px;
+  max-width: calc(100vw - 12px);
+  max-height: calc(100vh - 90px);
+  padding: 12px;
   @media(min-width: 640px) {
+    padding: 24px;
     max-width: calc(100vw - 120px);
     max-height: calc(100vh - 32px);
   }
