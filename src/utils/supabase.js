@@ -6,21 +6,34 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
-export async function getMessages() {
+export async function getMessages(messagesOld=[]) {
+    const timeLastMessage = messagesOld[0]?.created_at
     let messages = []
     try {
-        await supabaseClient
+        if (!!timeLastMessage) {
+            await supabaseClient
             .from('messages')
             .select('*')
+            .gte('created_at', timeLastMessage)
             .order('created_at', { ascending: false })
             .then(({ data }) => {
-            messages = convertMessages(data)
+                messages = convertMessages(data)
             })
+        } else {
+            await supabaseClient
+                .from('messages')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .then(({ data }) => {
+                    messages = convertMessages(data)
+                })
+        }
     } catch (e) {
         console.error(e)
         return []
     }
-    return messages
+    return [...messages,
+    ...messagesOld]
 }
 
 

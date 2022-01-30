@@ -22,7 +22,7 @@ export default function ChatPage(props) {
       })
     })
 
-    getMessages()
+    getMessages(messages)
     .then((msgs)=> setMessages(msgs))
     
 
