@@ -12,7 +12,7 @@ export function Head_app() {
             <meta property="og:url" content="https://discordia-gamma.vercel.app/" key="ogurl" />
             <meta property="og:image" content="https://discordia-gamma.vercel.app/main-screen.png" key="ogimage" />
             <meta property="og:site_name" content={APP_NAME} key="ogsitename" />
-            <meta property="og:title" content="Login" key="ogtitle" />
+            <meta property="og:title" content={APP_NAME} key="ogtitle" />
             <meta property="og:description" content="Agragador de servidores Aluracord" key="ogdesc" />
         </NextHead>
     )
