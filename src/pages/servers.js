@@ -138,14 +138,15 @@ export async function getStaticProps() {
 
 const HomeScreen = styled.div`
   display: grid;
-  grid-gap: 16px;
   height: 100%;
   width: 100%;
   padding: 16px;
   @media(min-width: 640px) {
+    grid-gap: 16px;
     grid-template-columns: 72px 1fr;
   }
   @media(max-width: 639px) {
+    grid-gap: 6px;
     grid-template-rows: 72px 1fr;
   }
 `
