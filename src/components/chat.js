@@ -49,7 +49,6 @@ export default function ChatPage(props) {
     if (props.username == msgToDelete.from & window.confirm(`Tem certeza de que deseja apagar a mensagem abaixo? \n \n ${msgToDelete.text}`)) {
       try {
         const id = await DeleteMessage(msgToDelete)
-        console.log("id ",id)
         if (msgToDelete.id == id) {
           setMessages((messages) => messages.filter(msg => msg.id != id))          
         } else {
