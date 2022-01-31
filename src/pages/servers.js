@@ -8,16 +8,23 @@ import Chat from '../components/chat'
 import { PageSubtitle } from '../components/Head'
 import { getServers, getMessages, ServersRealTime } from '../utils/supabase'
 import { useWarnStars } from '../utils/starsquestion'
+import ServerData from '../components/ServerData'
 
 
 export default function ServersPage(props) {
   const router = useRouter()
   const username = router.query.username
   const [screen, setScreen] = useState('main')
-  const [iframeSrc, setIframeSrc] = useState('')
+  const [iframeSrv, setIframeSrv] = useState('')
   const [servers, setServers] = useState(() => props.servers)
 
   useWarnStars()
+
+  useEffect(() => {
+    if (router && !username) {
+      router.replace(`/`)
+    }
+  },[router])
 
   useEffect(() => {
     const subscription = ServersRealTime((server) => {
@@ -26,14 +33,14 @@ export default function ServersPage(props) {
           server,
           ...servers,
         ]
-      });
-    });
+      })
+    })
     
     getServers(servers)
     .then((srvs)=> setServers(srvs))
 
     return () => {
-      subscription.unsubscribe();
+      subscription.unsubscribe()
     }
   }, [])
 
@@ -45,8 +52,8 @@ export default function ServersPage(props) {
           username={username}
           screen={screen}
           setScreen={setScreen}
-          iframeSrc={iframeSrc}
-          setIframeSrc={setIframeSrc}
+          iframeSrv={iframeSrv}
+          setIframeSrv={setIframeSrv}
           servers={servers}
         />
       </SideBar>  
@@ -55,13 +62,16 @@ export default function ServersPage(props) {
           username={username}
           messages={props.messages}
         />
-        : <iframe
-          height={'100%'}
-          width={'100%'}
-          frameBorder={0}
-          allowFullScreen={false}
-          src={iframeSrc}
-      />}
+        : <ChatBox>
+            <iframe
+              height={'100%'}
+              width={'100%'}
+              frameBorder={0}
+              allowFullScreen={false}
+              src={iframeSrv.autoUser ? iframeSrv.url + username : iframeSrv.url}
+            />
+          <ServerData iframeSrv={iframeSrv} username={username} />
+          </ChatBox>}
     </HomeScreen>
   </>)
 }
@@ -73,7 +83,7 @@ function SideMenu(props) {
     <>
       <button onClick={() => {
         props.setScreen('main')
-        props.setIframeSrc('')
+        props.setIframeSrv({})
       }} >
         <div>
           <img
@@ -84,7 +94,7 @@ function SideMenu(props) {
       </button>
       <button onClick={() => {
         props.setScreen('main')
-        props.setIframeSrc('')
+        props.setIframeSrv({})
       }}>
         <div>
           <svg
@@ -103,7 +113,7 @@ function SideMenu(props) {
       <li key={"a"}>
         <button onClick={() => {
             props.setScreen('main')
-            props.setIframeSrc('')
+            props.setIframeSrv({})
           }}
         >
           <div>
@@ -121,7 +131,7 @@ function SideMenu(props) {
           return (
             <li key={server.url}>
               <button onClick={() => {
-                props.setIframeSrc(server.autoUser ? server.url + props.username : server.url)
+                props.setIframeSrv(server)
                 props.setScreen('chat')
               }} >
                 <div>
@@ -130,7 +140,7 @@ function SideMenu(props) {
                     alt={server.name}
                   />
                 </div>
-                {((server.url == props.iframeSrc) || ((server.url + props.username) == props.iframeSrc))
+                {(server.url == props.iframeSrv.url)
                   && <div className='mask' />}
               </button>
             </li>
@@ -274,5 +284,20 @@ const SideBar = styled.div`
         left: -4px;
       }
     }
+  }
+`
+
+const ChatBox = styled.div`
+  display: grid;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  grid-template-rows: 1fr auto;
+  grid-gap: 4px;
+  @media(max-width: 639px) {
+    grid-gap: 2px;
   }
 `
