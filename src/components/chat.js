@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { convertMessage } from '../utils/convertmessages'
 import { DeleteMessage, getMessages, getServers, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
 import Messages from './Messages'
+import HeaderBox from './HeaderBox'
 
 export default function ChatPage(props) {
   const [message, setMessage] = useState('')
@@ -142,9 +143,9 @@ export default function ChatPage(props) {
 function Header() {
   return (
     <>
-      <Box styleSheet={{ width: '100%', marginBottom: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+      <HeaderBox>
         <Text variant='heading5'>
-          Discórdia
+          Discórdia - Servidor Principal
         </Text>
         <Button
           variant='tertiary'
@@ -152,7 +153,7 @@ function Header() {
           label='Logout'
           href="/"
         />
-      </Box>
+      </HeaderBox>
     </>
   )
 }
@@ -174,3 +175,4 @@ const ChatBox = styled.div`
     max-height: calc(100vh - 32px);
   }
 `
+

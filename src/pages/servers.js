@@ -9,6 +9,7 @@ import { PageSubtitle } from '../components/Head'
 import { getServers, getMessages, ServersRealTime } from '../utils/supabase'
 import { useWarnStars } from '../utils/starsquestion'
 import ServerData from '../components/ServerData'
+import AddSrvPage from '../components/addSrv'
 
 
 export default function ServersPage(props) {
@@ -56,16 +57,18 @@ export default function ServersPage(props) {
           username={username}
           messages={props.messages}
         />
-        : <ChatBox>
-            <iframe
-              height={'100%'}
-              width={'100%'}
-              frameBorder={0}
-              allowFullScreen={false}
-              src={iframeSrv.autoUser ? iframeSrv.url + username : iframeSrv.url}
-            />
+        : (screen == 'add'
+          ? <AddSrvPage></AddSrvPage>
+          : <ChatBox>
+              <iframe
+                height={'100%'}
+                width={'100%'}
+                frameBorder={0}
+                allowFullScreen={false}
+                src={iframeSrv.autoUser ? iframeSrv.url + username : iframeSrv.url}
+              />
           <ServerData iframeSrv={iframeSrv} username={username} />
-          </ChatBox>}
+          </ChatBox>)}
     </HomeScreen>
   </>)
 }
@@ -87,7 +90,7 @@ function SideMenu(props) {
         </div>
       </button>
       <button onClick={() => {
-        props.setScreen('main')
+        props.setScreen('add')
         props.setIframeSrv({})
       }}>
         <div>

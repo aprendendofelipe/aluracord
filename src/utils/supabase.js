@@ -103,4 +103,12 @@ export async function SaveNewMessage(message) {
     ])
 }
 
+export async function SaveNewServer(server) {
+    await supabaseClient
+    .from('servers')
+    .insert([
+      server
+    ])
+}
+
 export default supabaseClient

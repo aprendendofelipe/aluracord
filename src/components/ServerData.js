@@ -12,7 +12,7 @@ export default function ServerData(props) {
       <a
         href={props.iframeSrv.autoUser ? props.iframeSrv.url + props.username : props.iframeSrv.url}
         target="_blank"
-        rel="noreferrer"        
+        rel="noreferrer"
       >
         Conectado ao servidor externo:{" "}
         {props.iframeSrv.name}
