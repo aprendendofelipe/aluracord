@@ -21,12 +21,6 @@ export default function ServersPage(props) {
   useWarnStars()
 
   useEffect(() => {
-    if (router && !username) {
-      router.replace(`/`)
-    }
-  },[router])
-
-  useEffect(() => {
     const subscription = ServersRealTime((server) => {
       setServers((servers) => {
         return [
