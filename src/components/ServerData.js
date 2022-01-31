@@ -22,10 +22,13 @@ export default function ServerData(props) {
 }
 
 const ServerBox = styled.div`
+  display: flex;
   color: ${theme.colors.neutrals[400]};
   background-color: ${theme.colors.neutrals[700]};
   max-width: calc(100vw - 12px);
   padding: 6px;
+  align-items: center;
+  justify-content: center;
   @media(min-width: 640px) {
     padding: 12px;
     max-width: calc(100vw - 32px);
