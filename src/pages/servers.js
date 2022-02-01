@@ -17,27 +17,28 @@ export default function ServersPage(props) {
   const username = router.query.username
   const [screen, setScreen] = useState('main')
   const [iframeSrv, setIframeSrv] = useState('')
-  const [servers, setServers] = useState(() => props.servers)
+  // const [servers, setServers] = useState(() => props.servers)
+  const servers = props.servers
 
   useWarnStars()
 
-  useEffect(() => {
-    const subscription = ServersRealTime((server) => {
-      setServers((servers) => {
-        return [
-          server,
-          ...servers,
-        ]
-      })
-    })
+  // useEffect(() => {
+  //   const subscription = ServersRealTime((server) => {
+  //     setServers((servers) => {
+  //       return [
+  //         server,
+  //         ...servers,
+  //       ]
+  //     })
+  //   })
     
-    getServers(servers)
-    .then((srvs)=> setServers(srvs))
+  //   getServers(servers)
+  //   .then((srvs)=> setServers(srvs))
 
-    return () => {
-      subscription.unsubscribe()
-    }
-  }, [])
+  //   return () => {
+  //     subscription.unsubscribe()
+  //   }
+  // }, [])
 
   return (<>
     <PageSubtitle>Servidores</PageSubtitle>
@@ -53,13 +54,14 @@ export default function ServersPage(props) {
         />
       </SideBar>  
       {screen === 'main'
-        ? <Chat
+        && <Chat
           username={username}
           messages={props.messages}
-        />
-        : (screen == 'add'
-          ? <AddSrvPage></AddSrvPage>
-          : <ChatBox>
+        />}
+      {screen == 'add'
+        && <AddSrvPage></AddSrvPage>}
+      {screen == 'chat'
+        && <ChatBox>
               <iframe
                 height={'100%'}
                 width={'100%'}
@@ -68,7 +70,7 @@ export default function ServersPage(props) {
                 src={iframeSrv.autoUser ? iframeSrv.url + username : iframeSrv.url}
               />
           <ServerData iframeSrv={iframeSrv} username={username} />
-          </ChatBox>)}
+        </ChatBox>}
     </HomeScreen>
   </>)
 }

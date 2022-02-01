@@ -36,33 +36,22 @@ export async function getMessages(messagesOld=[]) {
 }
 
 
-export async function getServers(serversOld=[]) {
-    const timeLastServer = serversOld[0]?.created_at
+export async function getServers() {
     let servers = []
     try {
-        if (!timeLastServer){
-            await supabaseClient
-                .from('servers')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .then(({ data }) => {
-                    servers = data
-                })
-        } else {
-            await supabaseClient
-                .from('servers')
-                .select('*')
-                .gt('created_at', timeLastServer)
-                .order('created_at', { ascending: false })
-                .then(({ data }) => {
-                    servers = data
-                })
-        }
+        await supabaseClient
+            .from('servers')
+            .select('url, name, imgSrc, autoUser')
+            .gt('sequence', 0)
+            .order('sequence', { ascending: false })
+            .then(({ data }) => {
+                servers = data
+            })
     } catch (e) {
         console.error(e)
         return []
     }
-    return [...servers, ...serversOld]
+    return servers
 }
 
 export function ServersRealTime(addSrv) {

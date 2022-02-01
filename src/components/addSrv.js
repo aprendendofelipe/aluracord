@@ -1,4 +1,5 @@
-import { Box, Text, TextField, Button } from '@skynexui/components'
+/* eslint-disable @next/next/no-img-element */
+import { Box, Text, TextField, Button, Image } from '@skynexui/components'
 import theme from '../styles/theme'
 import styled from 'styled-components'
 import { useState } from 'react'
@@ -9,19 +10,19 @@ export default function AddSrvPage(props) {
   const [name, setName] = useState("")
   const [url, setUrl] = useState("")
   const [imgSrc, setImgSrc] = useState("")
-  const [autoUser, setAutoUser] = useState(true)
+  const [autoUser, setAutoUser] = useState(false)
 
-  function handleAddServer() {
-    console.log("server: ", name, url, imgSrc, autoUser)
-
-    const server = {
-      name,
-      url,
-      imgSrc,
-      autoUser
+  async function handleAddServer() {
+    if (name && url && imgSrc) {
+      const server = {
+        name,
+        url,
+        imgSrc,
+        autoUser
+      }
+      await SaveNewServer(server)
+      alert('Dados do servidor enviados para revisão')
     }
-    SaveNewServer(server)
-    
   }
 
   return (
@@ -32,7 +33,7 @@ export default function AddSrvPage(props) {
           position: 'relative',
           display: 'flex',
           flex: 1,
-          // height: '50%',
+          color: theme.colors.neutrals[300],
           backgroundColor: theme.colors.neutrals[600],
           flexDirection: 'column',
           borderRadius: '5px',
@@ -53,15 +54,15 @@ export default function AddSrvPage(props) {
           }}
         >
           <p>Nome que aparecerá no rodapé ao acessar o seu servidor:</p>
-          <TextField            
+          <TextField
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Nome do meu servidor"
+            placeholder="Nome do servidor"
             type="textarea"
             styleSheet={textfield}
           />
           <p>URL (se for o caso, inclua <b>/chat?username=</b> no final):</p>
-          <TextField            
+          <TextField
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://discordia-gamma.vercel.app/chat?username="
@@ -69,20 +70,33 @@ export default function AddSrvPage(props) {
             styleSheet={textfield}
           />
           <p>URL da imagem (irá aparecer na lista de servidores):</p>
-            <TextField            
+            <TextField
               value={imgSrc}
               onChange={(e) => setImgSrc(e.target.value)}
               placeholder="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
               type="textarea"
               styleSheet={textfield}
           />
+          <div className='imgSrv'>
+            {imgSrc && <img
+              src={imgSrc}
+              alt={'Insira uma imagem válida'}
+            />}
+          </div>
           <p>Marque se seu sevidor identifica qual é o usuário via <b>useRouter.query</b>?</p>
-          <TextField            
-              value={autoUser}
+          <TextField
+              checked={autoUser}
               onChange={(e) => setAutoUser(e.target.checked )}
               placeholder="https://discordia-gamma.vercel.app/chat?username="
               type="checkbox"
-              styleSheet={textfield}
+              styleSheet={{
+                width: '100%',
+                border: '0',
+                padding: '6px 8px',
+                height: '18px',
+                marginRight: '12px',
+                color: theme.colors.neutrals[200],
+              }}
           />
           <Button
             type='button'
@@ -100,6 +114,17 @@ export default function AddSrvPage(props) {
             }}
             />
         </Box>
+        <Image
+          src={'https://4.bp.blogspot.com/-NUSNTQNCMxU/Wc_9XsRIOdI/AAAAAAAARXs/HHu6C-BX_eQiDgZfVL5y-kNt5S_vzC3hgCEwYBhgL/s1600/em_construcao1.jpg'}
+          alt={'Página em construção'}
+          styleSheet={{
+            width: '280px',
+            maxWidth: '80%',
+            maxHeight: '160px',
+            borderRadius: '5px',
+            padding: '10px',            
+          }}
+        />
       </Box>
     </AddSrvBox>
   )
@@ -149,6 +174,19 @@ const AddSrvBox = styled.div`
   }
   button {
     align-self: flex-end;
+  }
+  .imgSrv {
+    display: flex;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    align-self: center;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    img {
+      height: 100%;
+    }
   }
 `
 
