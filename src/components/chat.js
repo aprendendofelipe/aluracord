@@ -29,6 +29,7 @@ export default function ChatPage(props) {
     return () => {
       subscription.unsubscribe();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleNewMessage(newMessage) {

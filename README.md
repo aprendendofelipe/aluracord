@@ -10,13 +10,32 @@ A principal funcionalidade é a possibilidade de enviar mensagem para servidores
 
 [<img src='https://discordia-gamma.vercel.app/main-screen.png'/>](https://discordia-gamma.vercel.app/)  
 
+## ✔️ Funcionalidades
+
+### Telas
+- [x] Login com usuário do GitHub (sem autenticação)
+- [x] Servidor de mensagens (chat estilo Discord)
+- [x] Servidores de mensagens de outros participantes da imersão
+- [x] Cadastro de novos servidores de mensagens
+
+### Mensagens
+- [x] Envio com <kbd>enter</kbd>
+- [x] Envio com Botão
+- [x] Exclusão (apenas autor)
+- [x] Stickers
+- [x] Links funcionais (marked)
+- [x] Texto sanitizado (isomorphic-dompurify)
+
+### Computação sem servidor
+- [x] Hospedagem com ISG - Regeneração Estática Incremental (Next.js/Vercel)
+- [x] Mensagens e lista de servidores (PostgreSQL/Supabase)
+
 ## 👁️‍🗨️ Visite aqui
 [discordia-gamma.vercel.app](https://discordia-gamma.vercel.app/)  
 
 ## 🤖 Adicionando o seu servidor ao projeto
-Por enquanto basta enviar uma mensagem diretamente no primeiro servidor do [sistema.](https://discordia-gamma.vercel.app/)  
-Então informe o endereço do seu servidor na Vercel e do seu GitHub.  
-Em breve disponibilizarei uma tela de cadastro.  
+Clique no botão ➕ dentro do [sistema.](https://discordia-gamma.vercel.app/)  
+Então informe o Nome, o endereço do seu servidor, uma imagem (gif fica mais legal) e marque a opção sobre identificação do usuário via useRouter.query.  
 
 ## ⌨️ Implemente o seu próprio agregador de servidores
 
@@ -50,6 +69,7 @@ name - text
 url - text
 imgSrc - text
 autoUser - bool
+sequence - int2
 ```
 
 - Crie seu projeto na [Vercel](https://vercel.com/) vinculando com seu repositório no GitHub.  
