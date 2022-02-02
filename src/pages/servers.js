@@ -117,7 +117,7 @@ function SideMenu(props) {
         >
           <div>
             <img
-              src="https://deltime.com.br/wp-content/uploads/2019/03/seguran%C3%A7a-de-datacenters-Deltime.jpg"
+              src="https://i.pinimg.com/originals/10/1e/11/101e1107e91db918a8e163622b2c95a0.gif"
               alt="main chat"
             />
           </div>
@@ -177,6 +177,7 @@ const HomeScreen = styled.div`
   display: grid;
   height: 100%;
   width: 100%;
+  justify-items: center;
   @media(min-width: 640px) {
     padding: 16px;
     grid-gap: 16px;

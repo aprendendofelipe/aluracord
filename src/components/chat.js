@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { Box, Text, TextField, Button } from '@skynexui/components'
 import { useEffect, useState } from 'react'
 import theme from '../styles/theme'
@@ -167,6 +168,7 @@ const ChatBox = styled.div`
   border-radius: 5px;
   background-color: ${theme.colors.neutrals[700]};
   height: 100%;
+  width: 800px;
   max-width: calc(100vw - 12px);
   max-height: calc(100vh - 90px);
   padding: 12px;
