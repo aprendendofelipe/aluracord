@@ -5,7 +5,7 @@ import { PageSubtitle } from '../components/Head'
 import { getServers, getMessages } from '../utils/supabase'
 import { useWarnStars } from '../utils/starsquestion'
 import ServerData from '../components/ServerData'
-import AddSrvPage from '../components/addSrv'
+import AddSrvPage from '../components/AddSrv'
 import Menu from '../components/Menu'
 import ExtSrvBox from '../components/ExtSrvBox'
 
