@@ -3,7 +3,7 @@ import Router from 'next/router'
 
 export const useWarnStars = () => {
 
-    const message = 'Gostou? Se merece estrela no GitHub é só dar OK'
+    const message = 'Gostou? Se merecemos estrela no GitHub é só dar OK'
 
     useEffect(() => {
         const routeChangeStart = url => {

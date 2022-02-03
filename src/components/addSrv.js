@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { Box, Text, TextField, Button, Image } from '@skynexui/components'
+import { Box, TextField, Button, Image } from '@skynexui/components'
 import theme from '../styles/theme'
-import styled from 'styled-components'
 import { useState } from 'react'
-import HeaderBox from './HeaderBox'
+import Header from './Header'
 import { SaveNewServer } from '../utils/supabase'
 
 export default function AddSrvPage(props) {
@@ -26,8 +25,8 @@ export default function AddSrvPage(props) {
   }
 
   return (
-    <AddSrvBox>
-      <Header />
+    <div className='AddSrvBox'>
+      <Header>Adicione servidores a essa Discórdia!</Header>
       <Box
         styleSheet={{
           position: 'relative',
@@ -75,7 +74,7 @@ export default function AddSrvPage(props) {
               onChange={(e) => setImgSrc(e.target.value)}
               placeholder="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
               type="textarea"
-              styleSheet={textfield}
+              styleSheet={{...textfield, height: '50px'}}
           />
           <div className='imgSrv'>
             {imgSrc && <img
@@ -87,15 +86,10 @@ export default function AddSrvPage(props) {
           <TextField
               checked={autoUser}
               onChange={(e) => setAutoUser(e.target.checked )}
-              placeholder="https://discordia-gamma.vercel.app/chat?username="
               type="checkbox"
               styleSheet={{
                 width: '100%',
-                border: '0',
-                padding: '6px 8px',
                 height: '18px',
-                marginRight: '12px',
-                color: theme.colors.neutrals[200],
               }}
           />
           <Button
@@ -115,80 +109,66 @@ export default function AddSrvPage(props) {
             />
         </Box>
         <Image
-          src={'https://4.bp.blogspot.com/-NUSNTQNCMxU/Wc_9XsRIOdI/AAAAAAAARXs/HHu6C-BX_eQiDgZfVL5y-kNt5S_vzC3hgCEwYBhgL/s1600/em_construcao1.jpg'}
+          src={theme.images.underConstruction}
           alt={'Página em construção'}
           styleSheet={{
             width: '280px',
             maxWidth: '80%',
             maxHeight: '160px',
             borderRadius: '5px',
-            padding: '10px',            
+            padding: '10px',
+            paddingTop: '20px',
           }}
         />
       </Box>
-    </AddSrvBox>
+      <style jsx>{`
+        .AddSrvBox {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+          border-radius: 5px;
+          color: ${theme.colors.primary[100]};
+          background-color: ${theme.colors.neutrals[700]};
+          height: 100%;
+          width: 100%;
+          padding: 12px;
+          align-items: center;
+          justify-content: center;
+        }
+        h2 {
+          font-size: 20px;
+        }
+        p {
+          padding-top: 10px;
+          font-size: 14px;
+        }
+        button {
+          align-self: flex-end;
+        }
+        .imgSrv {
+          display: flex;
+          height: 48px;
+          width: 48px;
+          border-radius: 50%;
+          align-self: center;
+          overflow: hidden;
+          align-items: center;
+          justify-content: center;
+        }
+        img {
+          height: 100%;
+        }
+        @media(min-width: 640px) {
+          .AddSrvBox {
+            padding: 24px;
+            max-width: calc(100vw - 120px);
+            max-height: calc(100vh - 32px);
+          }
+        }
+        `}</style>
+    </div>
   )
 }
-
-function Header() {
-  return (
-    <>
-      <HeaderBox>
-        <Text variant='heading5'>
-          Adicione servidores a essa Discórdia!
-        </Text>
-        <Button
-          variant='tertiary'
-          colorVariant='neutral'
-          label='Logout'
-          href="/"
-        />
-      </HeaderBox>
-    </>
-  )
-}
-
-const AddSrvBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  border-radius: 5px;
-  color: ${theme.colors.primary[100]};
-  background-color: ${theme.colors.neutrals[700]};
-  height: 100%;
-  width: 100%;
-  padding: 12px;
-  align-items: center;
-  justify-content: center;
-  @media(min-width: 640px) {
-    padding: 24px;
-    max-width: calc(100vw - 120px);
-    max-height: calc(100vh - 32px);
-  }
-  h2 {
-    font-size: 20px;
-  }
-  p {
-    padding-top: 10px;
-    font-size: 14px;
-  }
-  button {
-    align-self: flex-end;
-  }
-  .imgSrv {
-    display: flex;
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-    align-self: center;
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-    img {
-      height: 100%;
-    }
-  }
-`
 
 const textfield = {
   width: '100%',

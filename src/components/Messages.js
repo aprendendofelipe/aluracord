@@ -54,7 +54,7 @@ return (
                     display: 'inline-block',
                     marginRight: '8px',
                 }}
-                alt={msg.from}
+                alt={'De:'}
                 src={`https://github.com/${msg.from}.png`}
                 />
                 <Text tag="strong">

@@ -1,4 +1,9 @@
 const theme = {
+  images: {
+    background: 'https://deltime.com.br/wp-content/uploads/2019/03/seguran%C3%A7a-de-datacenters-Deltime.jpg',
+    underConstruction: 'https://4.bp.blogspot.com/-NUSNTQNCMxU/Wc_9XsRIOdI/AAAAAAAARXs/HHu6C-BX_eQiDgZfVL5y-kNt5S_vzC3hgCEwYBhgL/s1600/em_construcao1.jpg',
+    srvLink: 'https://i.pinimg.com/originals/10/1e/11/101e1107e91db918a8e163622b2c95a0.gif'
+  },
     colors: {
         primary: {
             "050": "#7791F8",

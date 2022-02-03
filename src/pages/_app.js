@@ -1,12 +1,13 @@
+import '../styles/globals.css'
 import Background from '../components/Background'
 import { Head_app } from '../components/Head'
-import GlobalStyle from '../styles/globals_in'
+import GlobalStyleJS from '../styles/globals_in'
 
 export default function App({ Component, pageProps }) {
 
   return (<>
     <Head_app />
-    <GlobalStyle />
+    <GlobalStyleJS />
     <Background>
       <Component {...pageProps} />
     </Background>
