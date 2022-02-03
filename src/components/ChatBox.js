@@ -15,7 +15,7 @@ function ChatBox(props) {
             height: 100%;
             width: 800px;
             max-width: calc(100vw - 12px);
-            max-height: calc(100vh - 90px);
+            max-height: calc(100vh - 98px);
             padding: 12px;
           }
           @media screen and (min-width: 640px) {
