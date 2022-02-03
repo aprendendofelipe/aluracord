@@ -27,7 +27,7 @@ A principal funcionalidade é a possibilidade de enviar mensagem para servidores
 - [x] Texto sanitizado (isomorphic-dompurify)
 
 ### Computação sem servidor
-- [x] Hospedagem com ISG - Regeneração Estática Incremental (Next.js/Vercel)
+- [x] Hospedagem com ISR - Regeneração Estática Incremental (Next.js/Vercel)
 - [x] Mensagens e lista de servidores (PostgreSQL/Supabase)
 
 ## 👁️‍🗨️ Visite aqui
