@@ -1,9 +1,9 @@
 import theme from "../styles/theme"
 
 const Background = (props) => (
-    <div>
-      {props.children}  
-        <style jsx>{`
+  <div>
+    {props.children}
+    <style jsx>{`
             div {
                 display: flex;
                 flex: 1;
@@ -16,7 +16,7 @@ const Background = (props) => (
                 background-size: cover;
             }
       `}</style>
-    </div>
+  </div>
 )
 
 export default Background

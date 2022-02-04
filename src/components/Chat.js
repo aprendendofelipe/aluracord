@@ -24,16 +24,16 @@ export default function ChatPage(props) {
     })
 
     getMessages(messages)
-    .then((msgs)=> setMessages(msgs))
+      .then((msgs) => setMessages(msgs))
 
     return () => {
       subscription.unsubscribe();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function handleNewMessage(newMessage) {
-    if (!newMessage) {return}
+    if (!newMessage) { return }
     const message = {
       de: props.username,
       texto: newMessage,
@@ -52,11 +52,11 @@ export default function ChatPage(props) {
       try {
         const id = await DeleteMessage(msgToDelete)
         if (msgToDelete.id == id) {
-          setMessages((messages) => messages.filter(msg => msg.id != id))          
+          setMessages((messages) => messages.filter(msg => msg.id != id))
         } else {
           throw new error(`Ocorreu um erro ao tentar apagar a mensagem: \n\n ${msgToDelete.text}`)
         }
-        
+
       } catch (e) {
         console.error(e)
         window.alert(`Ocorreu um erro ao tentar apagar a mensagem: \n\n ${msgToDelete.text}`)
@@ -123,7 +123,7 @@ export default function ChatPage(props) {
           <Button
             type='button'
             label='Enviar'
-            onClick={()=>handleNewMessage(message)}
+            onClick={() => handleNewMessage(message)}
             buttonColors={{
               contrastColor: theme.colors.neutrals["000"],
               mainColor: theme.colors.primary[500],
@@ -134,7 +134,7 @@ export default function ChatPage(props) {
               height: '34px',
               marginBottom: '8px',
             }}
-            />
+          />
         </Box>
       </Box>
     </ChatBox>

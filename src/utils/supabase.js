@@ -6,7 +6,7 @@ const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
-export async function getMessages(messagesOld=[]) {
+export async function getMessages(messagesOld = []) {
     const timeLastMessage = messagesOld[0]?.created_at
     let messages = []
     try {
@@ -17,7 +17,7 @@ export async function getMessages(messagesOld=[]) {
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
                     messages = convertMessages(data)
-            })
+                })
         } else {
             await supabaseClient
                 .from('messages')
@@ -56,20 +56,20 @@ export async function getServers() {
 
 export function ServersRealTime(addSrv) {
     return supabaseClient
-      .from('servers')
-      .on('INSERT', (resp) => {
-        addSrv(resp.new);
-      })
-      .subscribe();
+        .from('servers')
+        .on('INSERT', (resp) => {
+            addSrv(resp.new);
+        })
+        .subscribe();
 }
 
 export function MessagesRealTime(addMsg) {
     return supabaseClient
-      .from('messages')
-      .on('INSERT', (resp) => {
-        addMsg(resp.new);
-      })
-      .subscribe();
+        .from('messages')
+        .on('INSERT', (resp) => {
+            addMsg(resp.new);
+        })
+        .subscribe();
 }
 
 export async function DeleteMessage(msgToDelete) {
@@ -86,18 +86,18 @@ export async function DeleteMessage(msgToDelete) {
 
 export async function SaveNewMessage(message) {
     await supabaseClient
-    .from('messages')
-    .insert([
-      message
-    ])
+        .from('messages')
+        .insert([
+            message
+        ])
 }
 
 export async function SaveNewServer(server) {
     await supabaseClient
-    .from('servers')
-    .insert([
-      server
-    ])
+        .from('servers')
+        .insert([
+            server
+        ])
 }
 
 export default supabaseClient
