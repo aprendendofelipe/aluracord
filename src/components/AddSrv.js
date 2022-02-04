@@ -39,6 +39,8 @@ export default function AddSrvPage(props) {
           padding: '24px',
           boxShadow: `inset 0 2px 6px ${theme.colors.primary[400]}`,
           alignItems: 'center',
+          maxHeight: '100%',
+          overflow: 'auto',
         }}
       >
         <h2>
@@ -130,10 +132,12 @@ export default function AddSrvPage(props) {
           color: ${theme.colors.primary[100]};
           background-color: ${theme.colors.neutrals[700]};
           height: 100%;
+          max-height: 100%;
           width: 100%;
           padding: 12px;
           align-items: center;
           justify-content: center;
+          overflow: auto;
         }
         h2 {
           font-size: 20px;
