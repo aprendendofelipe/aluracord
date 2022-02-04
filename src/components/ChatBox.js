@@ -1,10 +1,10 @@
 import theme from '../styles/theme'
 
 function ChatBox(props) {
-    return (
-      <div className='ChatBox'>
-        {props.children}
-        <style jsx>{`
+  return (
+    <div className='ChatBox'>
+      {props.children}
+      <style jsx>{`
           .ChatBox {
             display: flex;
             flex-direction: column;

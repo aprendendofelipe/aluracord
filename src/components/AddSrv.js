@@ -39,6 +39,8 @@ export default function AddSrvPage(props) {
           padding: '24px',
           boxShadow: `inset 0 2px 6px ${theme.colors.primary[400]}`,
           alignItems: 'center',
+          maxHeight: '100%',
+          overflow: 'auto',
         }}
       >
         <h2>
@@ -69,12 +71,12 @@ export default function AddSrvPage(props) {
             styleSheet={textfield}
           />
           <p>URL da imagem (irá aparecer na lista de servidores):</p>
-            <TextField
-              value={imgSrc}
-              onChange={(e) => setImgSrc(e.target.value)}
-              placeholder="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
-              type="textarea"
-              styleSheet={{...textfield, height: '50px'}}
+          <TextField
+            value={imgSrc}
+            onChange={(e) => setImgSrc(e.target.value)}
+            placeholder="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
+            type="textarea"
+            styleSheet={{ ...textfield, height: '50px' }}
           />
           <div className='imgSrv'>
             {imgSrc && <img
@@ -84,18 +86,18 @@ export default function AddSrvPage(props) {
           </div>
           <p>Marque se seu sevidor identifica qual é o usuário via <b>useRouter.query</b>?</p>
           <TextField
-              checked={autoUser}
-              onChange={(e) => setAutoUser(e.target.checked )}
-              type="checkbox"
-              styleSheet={{
-                width: '100%',
-                height: '18px',
-              }}
+            checked={autoUser}
+            onChange={(e) => setAutoUser(e.target.checked)}
+            type="checkbox"
+            styleSheet={{
+              width: '100%',
+              height: '18px',
+            }}
           />
           <Button
             type='button'
             label='Salvar Servidor'
-            onClick={()=>handleAddServer()}
+            onClick={() => handleAddServer()}
             buttonColors={{
               contrastColor: theme.colors.neutrals["000"],
               mainColor: theme.colors.primary[500],
@@ -106,7 +108,7 @@ export default function AddSrvPage(props) {
               height: '34px',
               marginBottom: '8px',
             }}
-            />
+          />
         </Box>
         <Image
           src={theme.images.underConstruction}
@@ -130,10 +132,12 @@ export default function AddSrvPage(props) {
           color: ${theme.colors.primary[100]};
           background-color: ${theme.colors.neutrals[700]};
           height: 100%;
+          max-height: 100%;
           width: 100%;
           padding: 12px;
           align-items: center;
           justify-content: center;
+          overflow: auto;
         }
         h2 {
           font-size: 20px;

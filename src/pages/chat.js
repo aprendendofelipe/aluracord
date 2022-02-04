@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 
 export default function CustomRedirect() {
   const router = useRouter()
-  
+
   useEffect(() => {
     if (router) {
       const username = router.query.username
@@ -11,9 +11,9 @@ export default function CustomRedirect() {
         router.replace(`/servers?username=${username}`)
       } else {
         router.replace("/")
-        }
+      }
     }
-  },[router])
+  }, [router])
 
   return null
 }

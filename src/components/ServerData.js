@@ -6,7 +6,7 @@ export default function ServerData(props) {
       style={{
         blackgroundImage: `url(${props.iframeSrv.imgSrc})`
       }}
-    
+
     >
       <a
         href={props.iframeSrv.autoUser ? props.iframeSrv.url + props.username : props.iframeSrv.url}

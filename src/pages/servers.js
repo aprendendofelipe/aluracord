@@ -21,7 +21,7 @@ export default function ServersPage(props) {
 
   return (<>
     <PageSubtitle>Servidores</PageSubtitle>
-    <HomeScreen>  
+    <HomeScreen>
       <Menu
         username={username}
         screen={screen}
@@ -39,13 +39,13 @@ export default function ServersPage(props) {
         && <AddSrvPage></AddSrvPage>}
       {screen == 'chat'
         && <ExtSrvBox>
-              <iframe
-                height={'100%'}
-                width={'100%'}
-                frameBorder={0}
-                allowFullScreen={false}
-                src={iframeSrv.autoUser ? iframeSrv.url + username : iframeSrv.url}
-              />
+          <iframe
+            height={'100%'}
+            width={'100%'}
+            frameBorder={0}
+            allowFullScreen={false}
+            src={iframeSrv.autoUser ? iframeSrv.url + username : iframeSrv.url}
+          />
           <ServerData iframeSrv={iframeSrv} username={username} />
         </ExtSrvBox>}
     </HomeScreen>
@@ -59,15 +59,15 @@ export async function getStaticProps() {
   promises.push(getServers().catch(() => []))
 
   const responses = await Promise.all(promises)
-  .then((responses) => {
-    return {
+    .then((responses) => {
+      return {
         props: {
           messages: responses[0],
           servers: responses[1]
         },
-    }
-  })
-    
+      }
+    })
+
   return {
     ...responses,
     revalidate: 1

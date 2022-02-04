@@ -2,9 +2,50 @@
 import theme from '../styles/theme'
 
 function Menu(props) {
-    return (
-      <div className='Menu'>
-        <ul className='optionsUl'>
+  return (
+    <div className='Menu'>
+      <ul className='optionsUl'>
+        <button
+          className='srvButton'
+          onClick={() => {
+            props.setScreen('main')
+            props.setIframeSrv({})
+          }}
+        >
+          <div className='maskImgSrv'>
+            <img
+              src={props.username ? `https://github.com/${props.username}.png` : "/github_sunglasses.svg"}
+              alt={props.username}
+            />
+          </div>
+        </button>
+        <button
+          className='srvButton'
+          onClick={() => {
+            props.setScreen('add')
+            props.setIframeSrv({})
+          }}
+        >
+          <div
+            className='maskImgSrv'
+            style={{ backgroundColor: theme.colors.neutrals[200] }}
+          >
+            <svg
+              aria-hidden="false"
+              width={36}
+              height={36}
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill={theme.colors.primary[500]}
+                d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">
+              </path>
+            </svg>
+          </div>
+        </button>
+      </ul>
+      <ul className='srvMenuUl'>
+        <li key={"a"}>
           <button
             className='srvButton'
             onClick={() => {
@@ -14,79 +55,38 @@ function Menu(props) {
           >
             <div className='maskImgSrv'>
               <img
-                src={props.username ? `https://github.com/${props.username}.png` : "/github_sunglasses.svg"}
-                alt={props.username}
+                src={theme.images.srvLink}
+                alt="main chat"
               />
             </div>
+            {props.screen == 'main' && <div className='selector'></div>}
           </button>
-          <button
-            className='srvButton'
-            onClick={() => {
-              props.setScreen('add')
-              props.setIframeSrv({})
-            }}
-          >
-            <div
-              className='maskImgSrv'
-              style={{backgroundColor: theme.colors.neutrals[200]}}
-            >
-              <svg
-                aria-hidden="false"
-                width={36}
-                height={36}
-                viewBox="0 0 24 24"
+        </li>
+        {props.servers.map((server) => {
+          return (
+            <li key={server.url}>
+              <button
+                className='srvButton'
+                onClick={() => {
+                  props.setIframeSrv(server)
+                  props.setScreen('chat')
+                }}
               >
-                <path
-                  fill={theme.colors.primary[500]}
-                  d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">
-                </path>
-              </svg>
-            </div>
-          </button>
-        </ul>
-        <ul className='srvMenuUl'>
-          <li key={"a"}>
-            <button
-              className='srvButton'
-              onClick={() => {
-                props.setScreen('main')
-                props.setIframeSrv({})
-              }}
-            >
-              <div className='maskImgSrv'>
+                <div className='maskImgSrv'>
                   <img
-                  src={theme.images.srvLink}
-                  alt="main chat"
-                />
-              </div>
-              {props.screen == 'main' && <div className='selector'></div>}
-            </button>
-          </li>
-          {props.servers.map((server) => {
-            return (
-              <li key={server.url}>
-                <button
-                  className='srvButton'
-                  onClick={() => {
-                    props.setIframeSrv(server)
-                    props.setScreen('chat')
-                    }}
-                >
-                  <div className='maskImgSrv'>
-                    <img
-                      src={server.imgSrc}
-                      alt={server.name}
-                    />
-                  </div>
-                  {(server.url == props.iframeSrv.url)
-                    && <div className='selector' />}
-                </button>
-              </li>
-            )
-          })}
-        </ul>
-    
-        <style jsx>{`
+                    src={server.imgSrc}
+                    alt={server.name}
+                  />
+                </div>
+                {(server.url == props.iframeSrv.url)
+                  && <div className='selector' />}
+              </button>
+            </li>
+          )
+        })}
+      </ul>
+
+      <style jsx>{`
           .Menu {
             background-color: ${theme.colors.neutrals[700]};
             display: flex;

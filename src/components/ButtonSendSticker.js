@@ -52,7 +52,7 @@ export function ButtonSendSticker(props) {
           onClick={() => setOpenState(false)}
         >
           <Box
-              styleSheet={{
+            styleSheet={{
               padding: '8px',
               justifyContent: 'space-between'
             }}

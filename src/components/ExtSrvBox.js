@@ -1,8 +1,8 @@
 function ExtSrvBox(props) {
-    return (
-      <div className='ExtSrvBox'>
-        {props.children}
-        <style jsx>{`
+  return (
+    <div className='ExtSrvBox'>
+      {props.children}
+      <style jsx>{`
           .ExtSrvBox {
             display: grid;
             height: 100%;

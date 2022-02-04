@@ -108,7 +108,7 @@ export default function Home() {
             minHeight: '240px',
           }}
         >
-          
+
           <Image
             styleSheet={{
               borderRadius: '50%',
