@@ -23,8 +23,10 @@ A principal funcionalidade é a possibilidade de enviar mensagem para servidores
 - [x] Envio com Botão
 - [x] Exclusão (apenas autor)
 - [x] Stickers
-- [x] Links funcionais (marked)
-- [x] Texto sanitizado (isomorphic-dompurify)
+- [x] Texto sanitizado
+- [x] Markdown
+- [x] Links destacados
+- [x] Links abrem em nova aba do navegador
 
 ### Computação sem servidor
 - [x] Hospedagem com ISG - Regeneração Estática Incremental (Next.js/Vercel)
