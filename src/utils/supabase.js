@@ -7,9 +7,13 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
 export async function getMessages(messagesOld = []) {
-    const timeLastMessage = messagesOld[0]?.created_at && new Date(messagesOld[0]?.created_at).toISOString().replace("Z", messagesOld[0]?.created_at.slice(-8, -6) + "Z")
+    let timeLastMessage = ""
+    if (messagesOld.length > 0) {
+        const millisecondFraction = messagesOld[0]?.created_at.slice(-8, -6)
+        timeLastMessage = new Date(messagesOld[0]?.created_at).toISOString().replace("Z", millisecondFraction + "Z")
+    }
 
-    console.log("time: ", messagesOld[0]?.created_at, timeLastMessage)
+    console.log("time: ", messagesOld[-1]?.created_at, timeLastMessage)
     let messages = []
     try {
         if (!timeLastMessage) {
@@ -28,7 +32,7 @@ export async function getMessages(messagesOld = []) {
                 .gt('created_at', timeLastMessage)
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
-                    messages = convertMessages(data)
+                    messages = convertMessages(data.filter((msg) => msg.id != messagesOld[0].id))
                     console.log('debug2 - timeLastMessage msg.lenght: ', messages.length)
                 })
         }
