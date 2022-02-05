@@ -9,7 +9,7 @@ export function convertMessage(msg) {
 
 export function convertMessages(data) {
   let msgs = []
-  if (data.length > 1) {
+  if (data.length > 0) {
     msgs = data.map(msg => convertMessage(msg))
   }
   return msgs

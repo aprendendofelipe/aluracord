@@ -22,7 +22,6 @@ export default function ServersPage(props) {
   useWarnStars()
 
   useEffect(() => {
-    console.log('debug4 - entrou no useEffect', messages.length)
     const subscription = MessagesRealTime((message) => {
       const msg = convertMessage(message)
       setMessages((msgs) => {
@@ -36,9 +35,6 @@ export default function ServersPage(props) {
     getMessages(messages)
       .then((msgs) => {
         setMessages(msgs)
-      })
-      .then(() => {
-        console.log('debug5 - rodou getMessages', messages.length)
       })
 
     return () => {

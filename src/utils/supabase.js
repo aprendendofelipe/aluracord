@@ -8,11 +8,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 export async function getMessages(messagesOld = []) {
     let messages = []
-    let timeLastMessage = ""
-    if (messagesOld.length > 0) {
-        timeLastMessage = messagesOld[0]?.created_at.slice(0, -6) + "Z"
-    }
-    console.log("time: ", messagesOld[0]?.created_at, timeLastMessage)
+    let timeLastMessage = messagesOld[0]?.created_at
     try {
         if (!timeLastMessage) {
             await supabaseClient
@@ -21,7 +17,6 @@ export async function getMessages(messagesOld = []) {
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
                     messages = convertMessages(data)
-                    console.log('debug1 - !timeLastMessage msg.lenght: ', messages.length)
                 })
         } else {
             await supabaseClient
@@ -30,17 +25,13 @@ export async function getMessages(messagesOld = []) {
                 .gt('created_at', timeLastMessage)
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
-                    // messages = convertMessages(data.filter((msg) => msg.id != messagesOld[0].id))
-                    console.log('data: ', data)
                     messages = convertMessages(data)
-                    console.log('debug2 - timeLastMessage msg.lenght: ', messages.length)
                 })
         }
     } catch (e) {
         console.error(e)
         return []
     }
-    console.log('debug3 - msgOld.lenght: ', messagesOld.length)
     return [...messages, ...messagesOld]
 }
 
