@@ -12,16 +12,17 @@ import { convertMessage } from '../utils/convertmessages'
 
 
 export default function ServersPage(props) {
+  const [messages, setMessages] = useState(() => props.messages)
   const router = useRouter()
   const username = router.query.username
   const [screen, setScreen] = useState('main')
   const [iframeSrv, setIframeSrv] = useState('')
-  const [messages, setMessages] = useState(() => props.messages)
   const servers = props.servers
 
   useWarnStars()
 
   useEffect(() => {
+    console.log('debug4 - entrou no useEffect', messages.length)
     const subscription = MessagesRealTime((message) => {
       const msg = convertMessage(message)
       setMessages((msgs) => {
@@ -33,7 +34,12 @@ export default function ServersPage(props) {
     })
 
     getMessages(messages)
-      .then((msgs) => setMessages(msgs))
+      .then((msgs) => {
+        setMessages(msgs)
+      })
+      .then(() => {
+        console.log('debug5 - rodou getMessages', messages.length)
+      })
 
     return () => {
       subscription.unsubscribe();

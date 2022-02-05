@@ -17,6 +17,7 @@ export async function getMessages(messagesOld = []) {
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
                     messages = convertMessages(data)
+                    console.log('debug1 - !timeLastMessage msg.lenght: ', messages.length)
                 })
         } else {
             await supabaseClient
@@ -26,12 +27,14 @@ export async function getMessages(messagesOld = []) {
                 .order('created_at', { ascending: false })
                 .then(({ data }) => {
                     messages = convertMessages(data)
+                    console.log('debug2 - timeLastMessage msg.lenght: ', messages.length)
                 })
         }
     } catch (e) {
         console.error(e)
         return []
     }
+    console.log('debug3 - msgOld.lenght: ', messagesOld.length)
     return [...messages, ...messagesOld]
 }
 

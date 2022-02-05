@@ -77,7 +77,7 @@ export default function ChatPage(props) {
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
-                handleNewMessage(message)
+                handleNewMessage(newMessage)
               }
             }}
             placeholder="Insira sua mensagem aqui..."
