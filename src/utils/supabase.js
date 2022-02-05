@@ -7,8 +7,9 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
 export async function getMessages(messagesOld = []) {
-    const timeLastMessage = messagesOld[0]?.created_at && new Date(messagesOld[0]?.created_at).toUTCString()
-    console.log("time: ", timeLastMessage)
+    const timeLastMessage = messagesOld[0]?.created_at && new Date(messagesOld[0]?.created_at).toISOString()
+
+    console.log("time: ", messagesOld[0]?.created_at, timeLastMessage)
     let messages = []
     try {
         if (!timeLastMessage) {
