@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import Chat from '../components/Chat'
 import { PageSubtitle } from '../components/Head'
-import { getServers, getMessages } from '../utils/supabase'
+import { getServers, getMessages, MessagesRealTime } from '../utils/supabase'
 import { useWarnStars } from '../utils/starsquestion'
 import ServerData from '../components/ServerData'
 import AddSrvPage from '../components/AddSrv'
 import Menu from '../components/Menu'
 import ExtSrvBox from '../components/ExtSrvBox'
+import { convertMessage } from '../utils/convertmessages'
 
 
 export default function ServersPage(props) {
@@ -15,9 +16,30 @@ export default function ServersPage(props) {
   const username = router.query.username
   const [screen, setScreen] = useState('main')
   const [iframeSrv, setIframeSrv] = useState('')
+  const [messages, setMessages] = useState(() => props.messages)
   const servers = props.servers
 
   useWarnStars()
+
+  useEffect(() => {
+    const subscription = MessagesRealTime((message) => {
+      const msg = convertMessage(message)
+      setMessages((msgs) => {
+        return [
+          msg,
+          ...msgs,
+        ]
+      })
+    })
+
+    getMessages(messages)
+      .then((msgs) => setMessages(msgs))
+
+    return () => {
+      subscription.unsubscribe();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (<>
     <PageSubtitle>Servidores</PageSubtitle>
@@ -33,7 +55,8 @@ export default function ServersPage(props) {
       {screen === 'main'
         && <Chat
           username={username}
-          messages={props.messages}
+          messages={messages}
+          setMessages={setMessages}
         />}
       {screen == 'add'
         && <AddSrvPage></AddSrvPage>}
