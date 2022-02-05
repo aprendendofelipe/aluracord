@@ -1,49 +1,27 @@
 import { Box, TextField, Button } from '@skynexui/components'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import theme from '../styles/theme'
 import { ButtonSendSticker } from './ButtonSendSticker'
-import { convertMessage } from '../utils/convertmessages'
-import { DeleteMessage, getMessages, MessagesRealTime, SaveNewMessage } from '../utils/supabase'
+import { DeleteMessage, SaveNewMessage } from '../utils/supabase'
 import Messages from './Messages'
 import Header from './Header'
 import ChatBox from './ChatBox'
 
 export default function ChatPage(props) {
-  const [message, setMessage] = useState('')
-  const [messages, setMessages] = useState(() => props.messages)
+  const [newMessage, setNewMessage] = useState('')
 
-  useEffect(() => {
-    const subscription = MessagesRealTime((message) => {
-      const msg = convertMessage(message)
-      setMessages((valorAtualDaLista) => {
-        return [
-          msg,
-          ...valorAtualDaLista,
-        ]
-      })
-    })
-
-    getMessages(messages)
-      .then((msgs) => setMessages(msgs))
-
-    return () => {
-      subscription.unsubscribe();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  async function handleNewMessage(newMessage) {
-    if (!newMessage) { return }
+  async function handleNewMessage(newMsg) {
+    if (!newMsg) { return }
     const message = {
       de: props.username,
-      texto: newMessage,
+      texto: newMsg,
     }
     try {
       await SaveNewMessage(message)
-      setMessage('')
+      setNewMessage('')
     } catch (e) {
       console.error(e)
-      window.alert(`Ocorreu um erro ao tentar salvar a mensagem: \n\n ${message.text}`)
+      window.alert(`Ocorreu um erro ao tentar salvar a mensagem: \n\n ${newMsg}`)
     }
   }
 
@@ -52,7 +30,7 @@ export default function ChatPage(props) {
       try {
         const id = await DeleteMessage(msgToDelete)
         if (msgToDelete.id == id) {
-          setMessages((messages) => messages.filter(msg => msg.id != id))
+          props.setMessages((messages) => messages.filter(msg => msg.id != id))
         } else {
           throw new error(`Ocorreu um erro ao tentar apagar a mensagem: \n\n ${msgToDelete.text}`)
         }
@@ -81,7 +59,7 @@ export default function ChatPage(props) {
         }}
       >
         <Messages
-          messages={messages}
+          messages={props.messages}
           username={props.username}
           handleDeleteMessage={handleDeleteMessage}
         />
@@ -91,14 +69,15 @@ export default function ChatPage(props) {
             display: 'flex',
             alignItems: 'center',
           }}
+          onSubmit={() => console.log('submeteu')}
         >
           <TextField
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
             onKeyPress={(e) => {
               if (e.key === 'Enter') {
                 e.preventDefault()
-                handleNewMessage(message)
+                handleNewMessage(newMessage)
               }
             }}
             placeholder="Insira sua mensagem aqui..."
@@ -123,7 +102,7 @@ export default function ChatPage(props) {
           <Button
             type='button'
             label='Enviar'
-            onClick={() => handleNewMessage(message)}
+            onClick={() => handleNewMessage(newMessage)}
             buttonColors={{
               contrastColor: theme.colors.neutrals["000"],
               mainColor: theme.colors.primary[500],
