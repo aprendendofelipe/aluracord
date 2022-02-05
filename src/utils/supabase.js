@@ -7,7 +7,7 @@ const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
 
 export async function getMessages(messagesOld = []) {
-    const timeLastMessage = messagesOld[0]?.created_at && new Date(messagesOld[0]?.created_at).toISOString()
+    const timeLastMessage = messagesOld[0]?.created_at && new Date(messagesOld[0]?.created_at).toISOString().replace("Z", messagesOld[0]?.created_at.slice(-8, -6) + "Z")
 
     console.log("time: ", messagesOld[0]?.created_at, timeLastMessage)
     let messages = []
