@@ -1,31 +1,12 @@
-import { Box, TextField, Button } from '@skynexui/components'
-import { useState } from 'react'
+import { Box } from '@skynexui/components'
 import theme from '../styles/theme'
-import { ButtonSendSticker } from './ButtonSendSticker'
-import { DeleteMessage, SaveNewMessage } from '../utils/supabase'
+import { DeleteMessage } from '../utils/supabase'
 import Messages from './Messages'
 import Header from './Header'
 import ChatBox from './ChatBox'
+import NewMessageBox from './NewMessage'
 
 export default function ChatPage(props) {
-  const [newMessage, setNewMessage] = useState('')
-
-  async function handleNewMessage(newMsg) {
-    const msg = newMsg.trim()
-    if (!msg) { return }
-
-    const message = {
-      de: props.username,
-      texto: msg,
-    }
-    try {
-      await SaveNewMessage(message)
-      setNewMessage('')
-    } catch (e) {
-      console.error(e)
-      window.alert(`Ocorreu um erro ao tentar salvar a mensagem: \n\n ${newMsg}`)
-    }
-  }
 
   async function handleDeleteMessage(msgToDelete) {
     if (props.username == msgToDelete.from & window.confirm(`Tem certeza de que deseja apagar a mensagem abaixo? \n \n ${msgToDelete.text}`)) {
@@ -65,58 +46,7 @@ export default function ChatPage(props) {
           username={props.username}
           handleDeleteMessage={handleDeleteMessage}
         />
-        <Box
-          as="form"
-          styleSheet={{
-            display: 'flex',
-            alignItems: 'center',
-          }}
-          onSubmit={() => console.log('submeteu')}
-        >
-          <TextField
-            value={newMessage}
-            onChange={(e) => setNewMessage(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                handleNewMessage(newMessage)
-              }
-            }}
-            placeholder="Insira sua mensagem aqui..."
-            type="textarea"
-            styleSheet={{
-              width: '100%',
-              border: '0',
-              resize: 'none',
-              borderRadius: '5px',
-              padding: '6px 8px',
-              backgroundColor: theme.colors.neutrals[800],
-              height: '34px',
-              marginRight: '12px',
-              color: theme.colors.neutrals[200],
-            }}
-          />
-          <ButtonSendSticker
-            onStickerClick={(sticker) => {
-              handleNewMessage(':sticker: ' + sticker);
-            }}
-          />
-          <Button
-            type='button'
-            label='Enviar'
-            onClick={() => handleNewMessage(newMessage)}
-            buttonColors={{
-              contrastColor: theme.colors.neutrals["000"],
-              mainColor: theme.colors.primary[500],
-              mainColorLight: theme.colors.primary[400],
-              mainColorStrong: theme.colors.primary[600],
-            }}
-            styleSheet={{
-              height: '34px',
-              marginBottom: '8px',
-            }}
-          />
-        </Box>
+        <NewMessageBox username={props.username} />
       </Box>
     </ChatBox>
   )
