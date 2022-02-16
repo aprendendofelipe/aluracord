@@ -62,7 +62,7 @@ function Menu(props) {
             {props.screen == 'main' && <div className='selector'></div>}
           </button>
         </li>
-        {props.servers.map((server) => {
+        {props.servers?.map((server) => {
           return (
             <li key={server.url}>
               <button

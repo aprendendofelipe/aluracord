@@ -23,7 +23,7 @@ function Messages(props) {
                 marginBottom: '16px',
                 paddingInlineStart: '0px',
             }}
-        >{props.messages.length > 0 && props.messages.map((msg) => {
+        >{props.messages?.length > 0 && props.messages.map((msg) => {
             const markdown = marked.parse(msg.text, { renderer: renderer })
             const sanitized = DOMPurify.sanitize(markdown, { ADD_ATTR: ['target'] })
             return (
