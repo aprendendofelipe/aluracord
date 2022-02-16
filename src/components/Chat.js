@@ -11,10 +11,12 @@ export default function ChatPage(props) {
   const [newMessage, setNewMessage] = useState('')
 
   async function handleNewMessage(newMsg) {
-    if (!newMsg) { return }
+    const msg = newMsg.trim()
+    if (!msg) { return }
+
     const message = {
       de: props.username,
-      texto: newMsg,
+      texto: msg,
     }
     try {
       await SaveNewMessage(message)
