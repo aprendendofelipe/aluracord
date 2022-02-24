@@ -1,6 +1,7 @@
 import NextHead from 'next/head';
 
 const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME
+const DESCRIPTION = "Agregador de servidores Aluracord"
 
 export function Head_app() {
     return (
@@ -13,7 +14,8 @@ export function Head_app() {
             <meta property="og:image" content="https://discordia-gamma.vercel.app/main-screen.png" key="ogimage" />
             <meta property="og:site_name" content={APP_NAME} key="ogsitename" />
             <meta property="og:title" content={APP_NAME} key="ogtitle" />
-            <meta property="og:Description" content="Agregador de servidores Aluracord" key="ogdesc" />
+            <meta property="og:description" content={DESCRIPTION} key="ogdesc" />
+            <meta name="description" content={DESCRIPTION} />
         </NextHead>
     )
 }
