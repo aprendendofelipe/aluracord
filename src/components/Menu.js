@@ -6,6 +6,7 @@ function Menu(props) {
     <div className='Menu'>
       <ul className='optionsUl'>
         <button
+          aria-label={props.username}
           className='srvButton'
           onClick={() => {
             props.setScreen('main')
@@ -21,6 +22,7 @@ function Menu(props) {
         </button>
         <button
           className='srvButton'
+          aria-label="Adicionar servidor"
           onClick={() => {
             props.setScreen('add')
             props.setIframeSrv({})
@@ -47,6 +49,7 @@ function Menu(props) {
       <ul className='srvMenuUl'>
         <li key={"a"}>
           <button
+            aria-label="Servidor principal"
             className='srvButton'
             onClick={() => {
               props.setScreen('main')
@@ -66,6 +69,7 @@ function Menu(props) {
           return (
             <li key={server.url}>
               <button
+                aria-label={server.name}
                 className='srvButton'
                 onClick={() => {
                   props.setIframeSrv(server)
