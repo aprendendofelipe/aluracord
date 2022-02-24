@@ -15,6 +15,7 @@ function Title(props) {
                 color: ${theme.colors.neutrals['000']};
                 font-size: 24px;
                 font-weight: 600;
+                margin-top: 0;
             }
             `}</style>
     </>
@@ -40,6 +41,7 @@ export default function Home() {
             sm: 'row',
           },
           width: '100%', maxWidth: '700px',
+          gap: '24px',
           borderRadius: '5px', padding: '32px', margin: '16px',
           boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
           backgroundColor: theme.colors.neutrals[700],
@@ -55,8 +57,8 @@ export default function Home() {
             }
           }}
           styleSheet={{
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between',
+            width: { xs: '100%', sm: '50%' }, textAlign: 'center', minHeight: '240px'
           }}
         >
           <Title tag="h2">Seja bem vindo(a) aos</Title>
@@ -68,6 +70,10 @@ export default function Home() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             fullWidth
+            styleSheet={{
+              height: '48px',
+              marginBottom: '16px'
+            }}
             textFieldColors={{
               neutral: {
                 textColor: theme.colors.neutrals[200],
@@ -81,6 +87,9 @@ export default function Home() {
             type='submit'
             label='Entrar'
             fullWidth
+            styleSheet={{
+              height: '48px'
+            }}
             buttonColors={{
               contrastColor: theme.colors.neutrals["000"],
               mainColor: theme.colors.primary[500],
@@ -113,6 +122,7 @@ export default function Home() {
             styleSheet={{
               borderRadius: '50%',
               marginBottom: '16px',
+              width: '166px'
             }}
             alt={username}
             src={username ? `https://github.com/${username}.png` : "/github_sunglasses.svg"}
