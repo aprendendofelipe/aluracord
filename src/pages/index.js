@@ -68,6 +68,7 @@ export default function Home() {
 
           <TextField
             value={username}
+            placeholder="Entre com seu usuário do GitHub"
             onChange={(e) => setUsername(e.target.value)}
             fullWidth
             styleSheet={{
