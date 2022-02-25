@@ -15,23 +15,27 @@ export function ButtonSendSticker(props) {
       <Button
         styleSheet={{
           borderRadius: '50%',
-          padding: '0',
-          minWidth: '34px',
-          minHeight: '34px',
-          fontSize: '20px',
-          marginBottom: '8px',
-          marginRight: '8px',
-          lineHeight: '0',
+          border: '0',
+          padding: '7px',
+          Width: '48px',
+          Height: '48px',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: theme.colors.neutrals[300],
+          backgroundColor: 'transparent',
           filter: isOpen ? 'grayscale(0)' : 'grayscale(1)',
           hover: {
             filter: 'grayscale(0)',
           }
         }}
-        label="😋"
+        label={
+          <Text
+            styleSheet={{
+              fontSize: '28px',
+            }}
+          >
+            😋
+          </Text>}
         onClick={() => setOpenState(!isOpen)}
       />
       {isOpen && (
@@ -44,8 +48,8 @@ export function ButtonSendSticker(props) {
             backgroundColor: theme.colors.neutrals[800],
             width: '60vw',
             height: '60vh',
-            right: '5px',
-            bottom: '34px',
+            left: '8px',
+            bottom: '36px',
             padding: '8px',
             boxShadow: 'rgba(4, 4, 5, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
           }}

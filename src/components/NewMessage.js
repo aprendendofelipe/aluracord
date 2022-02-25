@@ -34,6 +34,11 @@ export default function NewMessageBox({ username }) {
             }}
             onSubmit={() => console.log('submeteu')}
         >
+            <ButtonSendSticker
+                onStickerClick={(sticker) => {
+                    handleNewMessage(':sticker: ' + sticker);
+                }}
+            />
             <TextField
                 value={newMessage}
                 onChange={(e) => setNewMessage(e.target.value)}
@@ -58,15 +63,11 @@ export default function NewMessageBox({ username }) {
                     width: '100%',
                     border: '0',
                     borderRadius: '5px',
-                    padding: '6px 8px',
                     backgroundColor: theme.colors.neutrals[800],
-                    marginRight: '12px',
+                    marginTop: '8px',
+                    marginLeft: '8px',
+                    marginRight: '16px',
                     color: theme.colors.neutrals[200],
-                }}
-            />
-            <ButtonSendSticker
-                onStickerClick={(sticker) => {
-                    handleNewMessage(':sticker: ' + sticker);
                 }}
             />
             <Button
@@ -80,8 +81,8 @@ export default function NewMessageBox({ username }) {
                     mainColorStrong: theme.colors.primary[600],
                 }}
                 styleSheet={{
-                    height: '34px',
-                    marginBottom: '8px',
+                    minHeight: '48px',
+                    minWidth: '48px',
                 }}
             />
         </Box>
