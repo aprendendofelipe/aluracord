@@ -1,9 +1,8 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
 import { PageSubtitle } from '../components/Head'
 import theme from '../styles/theme'
-
+import useLazyInputChanges from '../hooks/useLazyInputChanges'
 
 function Title(props) {
   const Tag = props.tag || 'h1';
@@ -23,8 +22,10 @@ function Title(props) {
 }
 
 export default function Home() {
-  const [username, setUsername] = useState('')
+  const [username, lazyUsername, setUsername] = useLazyInputChanges()
   const router = useRouter()
+
+
 
   return (
     <>
@@ -125,8 +126,8 @@ export default function Home() {
               marginBottom: '16px',
               width: '166px'
             }}
-            alt={username}
-            src={username ? `https://github.com/${username}.png` : "/github_sunglasses.svg"}
+            alt={lazyUsername}
+            src={lazyUsername ? `https://github.com/${lazyUsername}.png` : "/github_sunglasses.svg"}
           />
           <Text
             variant="body4"
@@ -137,7 +138,7 @@ export default function Home() {
               borderRadius: '1000px'
             }}
           >
-            {username}
+            {lazyUsername}
           </Text>
         </Box>
         {/* Photo Area */}
