@@ -14,6 +14,7 @@ function Header(props) {
           colorVariant='neutral'
           label={<Text
             styleSheet={{
+              fontSize: '14px',
               color: theme.colors.neutrals[300],
             }}
           >
