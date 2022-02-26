@@ -18,6 +18,8 @@ function Menu(props) {
               <img
                 src={props.username ? `https://github.com/${props.username}.png` : "/github_sunglasses.svg"}
                 alt={props.username}
+                height='48px'
+                width='48px'
               />
             </div>
           </button>
@@ -64,6 +66,8 @@ function Menu(props) {
               <img
                 src={theme.images.srvLink}
                 alt="main chat"
+                height='48px'
+                width='48px'
               />
             </div>
             {props.screen == 'main' && <div className='selector'></div>}
