@@ -129,7 +129,6 @@ export default function AddSrvPage(props) {
           flex-direction: column;
           flex: 1;
           border-radius: 5px;
-          color: ${theme.colors.primary[100]};
           background-color: ${theme.colors.neutrals[700]};
           height: 100%;
           max-height: 100%;

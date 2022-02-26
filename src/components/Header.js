@@ -1,5 +1,6 @@
 import { Text, Button } from '@skynexui/components'
 import HeaderBox from './HeaderBox'
+import theme from '../styles/theme'
 
 function Header(props) {
   return (
@@ -11,7 +12,13 @@ function Header(props) {
         <Button
           variant='tertiary'
           colorVariant='neutral'
-          label='Logout'
+          label={<Text
+            styleSheet={{
+              color: theme.colors.neutrals[300],
+            }}
+          >
+            Logout
+          </Text>}
           href="/"
         />
       </HeaderBox>
