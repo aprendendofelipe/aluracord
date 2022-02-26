@@ -168,8 +168,9 @@ function Menu(props) {
                 gap: 8px;
                 overflow-x: auto;
                 flex-direction: row;
+                width: 116px;
                 max-width: 50%;
-                margin-top: -6px
+                margin-top: 10px;
             }
             .srvMenuUl {
                 gap: 8px;
@@ -181,8 +182,6 @@ function Menu(props) {
             }
             .srvButton {
                 display: contents;
-            }
-            .maskImgSrv {
             }
           }
           
@@ -197,6 +196,7 @@ function Menu(props) {
                 flex-direction: column;
                 max-height: 50%;
                 padding-top: 8px;
+                
             }
             .srvMenuUl {
                 gap: 4px;
