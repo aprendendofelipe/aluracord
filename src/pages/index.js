@@ -2,7 +2,8 @@ import { Box, Button, Text, TextField, Image } from '@skynexui/components'
 import { useRouter } from 'next/router'
 import { PageSubtitle } from '../components/Head'
 import theme from '../styles/theme'
-import useLazyInputChanges from '../hooks/useLazyInputChanges'
+import useAdaptiveDebounce from '../hooks/useAdaptiveDebounce'
+import { useState } from 'react'
 
 function Title(props) {
   const Tag = props.tag || 'h1';
@@ -22,10 +23,49 @@ function Title(props) {
 }
 
 export default function Home() {
-  const [username, lazyUsername, setUsername] = useLazyInputChanges()
+  const [username, setUsername] = useState("")
+  const [name, setName] = useState("")
+  const [userImgURL, setUserImgURL] = useState("/github_sunglasses.svg")
   const router = useRouter()
 
+  function clearUsername() {
+    setUsername('')
+    setName('')
+    setUserImgURL("/github_sunglasses.svg")
+  }
 
+  async function verifyUser(username) {
+    let verifiedUser = ""
+    username = username.trim()
+    try {
+      const res = await fetch(`https://api.github.com/users/${username}`)
+      if (res.ok) {
+        setUserImgURL(`https://github.com/${username}.png`)
+        const responseJSON = await res.json()
+        verifiedUser = username
+        setUsername(verifiedUser)
+        setName(responseJSON.name)
+      } else if (res.status == 404) {
+        clearUsername()
+      } else {
+        throw new error()
+      }
+    } catch (error) {
+      setUserImgURL(`https://github.com/${username}.png`)
+      setUsername(username)
+      setName(username)
+    }
+    return verifiedUser
+  }
+  const {
+    entry: entryUsername,
+    setEntry: setEntryUsername,
+  } = useAdaptiveDebounce({
+    defaultEntry: "",
+    debouncedFunc: verifyUser,
+    entryValidatorFunc: (username) => username && typeof username === 'string',
+    defaultFunc: clearUsername,
+  })
 
   return (
     <>
@@ -68,9 +108,9 @@ export default function Home() {
           </Text>
 
           <TextField
-            value={username}
+            value={entryUsername}
             placeholder="Entre com seu usuário do GitHub"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setEntryUsername(e.target.value)}
             fullWidth
             styleSheet={{
               height: '48px',
@@ -88,6 +128,7 @@ export default function Home() {
           <Button
             type='submit'
             label='Entrar'
+            disabled={username == ''}
             fullWidth
             styleSheet={{
               height: '48px'
@@ -126,8 +167,9 @@ export default function Home() {
               marginBottom: '16px',
               width: '166px'
             }}
-            alt={lazyUsername}
-            src={lazyUsername ? `https://github.com/${lazyUsername}.png` : "/github_sunglasses.svg"}
+            alt={name}
+            userImgURL
+            src={userImgURL}
           />
           <Text
             variant="body4"
@@ -138,7 +180,7 @@ export default function Home() {
               borderRadius: '1000px'
             }}
           >
-            {lazyUsername}
+            {name}
           </Text>
         </Box>
         {/* Photo Area */}
