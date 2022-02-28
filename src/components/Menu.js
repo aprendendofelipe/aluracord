@@ -5,48 +5,55 @@ function Menu(props) {
   return (
     <div className='Menu'>
       <ul className='optionsUl'>
-        <button
-          className='srvButton'
-          onClick={() => {
-            props.setScreen('main')
-            props.setIframeSrv({})
-          }}
-        >
-          <div className='maskImgSrv'>
-            <img
-              src={props.username ? `https://github.com/${props.username}.png` : "/github_sunglasses.svg"}
-              alt={props.username}
-            />
-          </div>
-        </button>
-        <button
-          className='srvButton'
-          onClick={() => {
-            props.setScreen('add')
-            props.setIframeSrv({})
-          }}
-        >
-          <div
-            className='maskImgSrv'
-            style={{ backgroundColor: theme.colors.neutrals[200] }}
+        <li>
+          <button
+            aria-label={props.username}
+            className='srvButton'
+            onClick={() => {
+              props.setScreen('main')
+              props.setIframeSrv({})
+            }}
           >
-            <svg
-              aria-hidden="false"
-              width={36}
-              height={36}
-              viewBox="0 0 24 24"
+            <div className='maskImgSrv'>
+              <img
+                src={props.username ? `https://github.com/${props.username}.png` : "/github_sunglasses.svg"}
+                alt={props.username}
+              />
+            </div>
+          </button>
+        </li>
+        <li>
+          <button
+            className='srvButton'
+            aria-label="Adicionar servidor"
+            onClick={() => {
+              props.setScreen('add')
+              props.setIframeSrv({})
+            }}
+          >
+            <div
+              className='maskImgSrv'
+              style={{ backgroundColor: theme.colors.neutrals[200] }}
             >
-              <path
-                fill={theme.colors.primary[500]}
-                d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">
-              </path>
-            </svg>
-          </div>
-        </button>
+              <svg
+                aria-hidden="false"
+                width={36}
+                height={36}
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill={theme.colors.primary[500]}
+                  d="M20 11.1111H12.8889V4H11.1111V11.1111H4V12.8889H11.1111V20H12.8889V12.8889H20V11.1111Z">
+                </path>
+              </svg>
+            </div>
+          </button>
+        </li>
       </ul>
       <ul className='srvMenuUl'>
         <li key={"a"}>
           <button
+            aria-label="Servidor principal"
             className='srvButton'
             onClick={() => {
               props.setScreen('main')
@@ -66,6 +73,7 @@ function Menu(props) {
           return (
             <li key={server.url}>
               <button
+                aria-label={server.name}
                 className='srvButton'
                 onClick={() => {
                   props.setIframeSrv(server)
@@ -160,8 +168,9 @@ function Menu(props) {
                 gap: 8px;
                 overflow-x: auto;
                 flex-direction: row;
+                width: 116px;
                 max-width: 50%;
-                margin-top: -6px
+                margin-top: 10px;
             }
             .srvMenuUl {
                 gap: 8px;
@@ -173,8 +182,6 @@ function Menu(props) {
             }
             .srvButton {
                 display: contents;
-            }
-            .maskImgSrv {
             }
           }
           
@@ -189,6 +196,7 @@ function Menu(props) {
                 flex-direction: column;
                 max-height: 50%;
                 padding-top: 8px;
+                
             }
             .srvMenuUl {
                 gap: 4px;

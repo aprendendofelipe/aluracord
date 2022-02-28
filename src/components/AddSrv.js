@@ -78,13 +78,14 @@ export default function AddSrvPage(props) {
             type="textarea"
             styleSheet={{ ...textfield, height: '50px' }}
           />
-          <div className='imgSrv'>
+          <div className='imgSrvMask'>
             {imgSrc && <img
+              className='imgSrv'
               src={imgSrc}
               alt={'Insira uma imagem válida'}
             />}
           </div>
-          <p>Marque se seu sevidor identifica qual é o usuário via <b>useRouter.query</b>?</p>
+          <p>Marque se seu servidor identifica qual é o usuário via <b>useRouter().query</b>?</p>
           <TextField
             checked={autoUser}
             onChange={(e) => setAutoUser(e.target.checked)}
@@ -107,6 +108,7 @@ export default function AddSrvPage(props) {
             styleSheet={{
               height: '34px',
               marginBottom: '8px',
+              alignSelf: 'center',
             }}
           />
         </Box>
@@ -116,6 +118,7 @@ export default function AddSrvPage(props) {
           styleSheet={{
             width: '280px',
             maxWidth: '80%',
+            height: '100%',
             maxHeight: '160px',
             borderRadius: '5px',
             padding: '10px',
@@ -129,7 +132,6 @@ export default function AddSrvPage(props) {
           flex-direction: column;
           flex: 1;
           border-radius: 5px;
-          color: ${theme.colors.primary[100]};
           background-color: ${theme.colors.neutrals[700]};
           height: 100%;
           max-height: 100%;
@@ -146,10 +148,7 @@ export default function AddSrvPage(props) {
           padding-top: 10px;
           font-size: 14px;
         }
-        button {
-          align-self: flex-end;
-        }
-        .imgSrv {
+        .imgSrvMask {
           display: flex;
           height: 48px;
           width: 48px;
@@ -159,7 +158,7 @@ export default function AddSrvPage(props) {
           align-items: center;
           justify-content: center;
         }
-        img {
+        .imgSrv {
           height: 100%;
         }
         @media(min-width: 640px) {

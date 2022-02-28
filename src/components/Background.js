@@ -9,7 +9,6 @@ const Background = (props) => (
                 flex: 1;
                 align-items: center;
                 justify-content: center;
-                color: ${theme.colors.primary[100]};
                 background-color: ${theme.colors.primary[200]};
                 background-image: url(${theme.images.background});
                 background-repeat: no-repeat;

@@ -37,7 +37,7 @@ A principal funcionalidade é a possibilidade de enviar mensagem para servidores
 
 ## 🤖 Adicionando o seu servidor ao projeto
 Clique no botão ➕ dentro do [sistema.](https://discordia-gamma.vercel.app/)  
-Então informe o Nome, o endereço do seu servidor, uma imagem (gif fica mais legal) e marque a opção sobre identificação do usuário via useRouter.query.  
+Então informe o Nome, o endereço do seu servidor, uma imagem (gif fica mais legal) e marque a opção sobre identificação do usuário via useRouter().query.  
 
 ## ⌨️ Implemente o seu próprio agregador de servidores
 
