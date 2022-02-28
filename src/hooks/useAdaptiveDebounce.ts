@@ -23,7 +23,7 @@ export default function useDebounce(
     maxDelay = 1200,
     debouncedFunc = (entry) => entry,
     cloneFunc = (entry) => entry.valueOf(),
-    cancel
+    cancel = () => null
   }: options
 ) {
   const [entry, setEntry] = useState(defaultEntry)
@@ -55,7 +55,7 @@ export default function useDebounce(
   }
 
   useEffect(() => {
-    if (cancel) cancel()
+    cancel()
     if (lastEntryTime == 0) {
       setLastEntryTime(Date.now())
     } else {
