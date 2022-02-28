@@ -28,7 +28,7 @@ export default function Home() {
 
   const clearUsername = {
     username: '',
-    name: 'Digite um usuário válido',
+    name: 'Insira um usuário válido',
     userImgURL: '/github_sunglasses.svg'
   }
 
@@ -55,10 +55,13 @@ export default function Home() {
         }
       })
       .catch((e) => {
-        userData = {
-          username,
-          name: username,
-          userImgURL: `https://github.com/${username}.png`
+        console.log('debug: ', e.name)
+        if (e.name != 'AbortError') {
+          userData = {
+            username,
+            name: username,
+            userImgURL: `https://github.com/${username}.png`
+          }
         }
       })
     return userData
@@ -190,7 +193,7 @@ export default function Home() {
               borderRadius: '1000px'
             }}
           >
-            {name}
+            {status == ('running' || 'debouncing') ? 'Buscando usuário...' : name}
           </Text>
         </Box>
         {/* Photo Area */}
