@@ -2,8 +2,8 @@ import { Box, Button, Text, TextField, Image } from '@skynexui/components'
 import { useRouter } from 'next/router'
 import { PageSubtitle } from '../components/Head'
 import theme from '../styles/theme'
-import useAdaptiveDebounce from '../hooks/useAdaptiveDebounce'
-import { useState } from 'react'
+import useDebounce from '../hooks/useAdaptiveDebounce'
+import { useRef } from 'react'
 
 function Title(props) {
   const Tag = props.tag || 'h1';
@@ -23,48 +23,61 @@ function Title(props) {
 }
 
 export default function Home() {
-  const [username, setUsername] = useState("")
-  const [name, setName] = useState("")
-  const [userImgURL, setUserImgURL] = useState("/github_sunglasses.svg")
   const router = useRouter()
+  const abortRef = useRef(null)
 
-  function clearUsername() {
-    setUsername('')
-    setName('')
-    setUserImgURL("/github_sunglasses.svg")
+  const clearUsername = {
+    username: '',
+    name: 'Digite um usuário válido',
+    userImgURL: '/github_sunglasses.svg'
   }
 
   async function verifyUser(username) {
-    let verifiedUser = ""
+    if (!username || typeof username !== 'string') return clearUsername
     username = username.trim()
-    try {
-      const res = await fetch(`https://api.github.com/users/${username}`)
-      if (res.ok) {
-        setUserImgURL(`https://github.com/${username}.png`)
-        const responseJSON = await res.json()
-        verifiedUser = username
-        setUsername(verifiedUser)
-        setName(responseJSON.name)
-      } else if (res.status == 404) {
-        clearUsername()
-      } else {
-        throw new error()
-      }
-    } catch (error) {
-      setUserImgURL(`https://github.com/${username}.png`)
-      setUsername(username)
-      setName(username)
-    }
-    return verifiedUser
+    let userData = clearUsername
+    const abortController = new AbortController()
+    abortRef.current = abortController
+    const signal = abortController.signal
+    await fetch(`https://api.github.com/users/${username}`, { signal })
+      .then((res) => {
+        if (res.ok) return res.json()
+        else if (res.status != 404) throw new error()
+      })
+      .then((data) => {
+        if (data) {
+          const name = data.name || username
+          userData = {
+            username,
+            name,
+            userImgURL: `https://github.com/${username}.png`
+          }
+        }
+      })
+      .catch((e) => {
+        userData = {
+          username,
+          name: username,
+          userImgURL: `https://github.com/${username}.png`
+        }
+      })
+    return userData
   }
+
+  function cancelFetch() {
+    if (abortRef.current) abortRef.current.abort()
+  }
+
   const {
     entry: entryUsername,
     setEntry: setEntryUsername,
-  } = useAdaptiveDebounce({
+    debounced: { username, name, userImgURL },
+    status
+  } = useDebounce({
     defaultEntry: "",
+    defaultReturn: clearUsername,
     debouncedFunc: verifyUser,
-    entryValidatorFunc: (username) => username && typeof username === 'string',
-    defaultFunc: clearUsername,
+    cancel: cancelFetch,
   })
 
   return (
@@ -93,9 +106,7 @@ export default function Home() {
           as="form"
           onSubmit={function (e) {
             e.preventDefault()
-            if (username) {
-              router.push(`/servers?username=${username}`)
-            }
+            if (status == 'debounced' && username) router.push(`/servers?username=${username}`)
           }}
           styleSheet={{
             display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between',
@@ -128,7 +139,7 @@ export default function Home() {
           <Button
             type='submit'
             label='Entrar'
-            disabled={username == ''}
+            disabled={username == '' || status != 'debounced'}
             fullWidth
             styleSheet={{
               height: '48px'
@@ -168,7 +179,6 @@ export default function Home() {
               width: '166px'
             }}
             alt={name}
-            userImgURL
             src={userImgURL}
           />
           <Text
@@ -186,5 +196,5 @@ export default function Home() {
         {/* Photo Area */}
       </Box>
     </>
-  );
+  )
 }
