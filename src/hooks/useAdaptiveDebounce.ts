@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 
-export type entry = string | number | Array<any> | object | Function
-export type debounced = string | number | Array<any> | object | Function | void
+export type entry = string | number | Array<any> | object | Function | any
+export type debounced = string | number | Array<any> | object | Function | void | any
 
 interface options {
   defaultEntry?: entry
