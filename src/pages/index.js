@@ -193,7 +193,7 @@ export default function Home() {
               borderRadius: '1000px'
             }}
           >
-            {status == ('running' || 'debouncing') ? 'Buscando usuário...' : name}
+            {(status == 'debouncing' || status == 'running') ? 'Buscando usuário...' : name}
           </Text>
         </Box>
         {/* Photo Area */}
