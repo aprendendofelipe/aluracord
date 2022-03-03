@@ -76,10 +76,7 @@ export default function AddSrvPage() {
             maxLength={MAXLENGTH}
             counter={true}
             value={name}
-            onChange={(e) => {
-              if (e.target.value < MAXLENGTH) setName(e.target.value)
-              else setName(e.target.value.slice(0, MAXLENGTH))
-            }}
+            onChange={(e) => setName(e.target.value.slice(0, MAXLENGTH))}
             placeholder='Aparecerá no rodapé ao acessar o seu servidor'
             type="textarea"
             styleSheet={textfield}
