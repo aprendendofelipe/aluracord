@@ -26,6 +26,7 @@ function Messages(props) {
         >{props.messages?.length > 0 && props.messages.map((msg) => {
             const markdown = marked.parse(msg.text, { renderer: renderer })
             const sanitized = DOMPurify.sanitize(markdown, { ADD_ATTR: ['target'] })
+            const ownMsg = props.username == msg.from
             return (
                 <Box
                     key={msg.id}
@@ -33,9 +34,8 @@ function Messages(props) {
                     styleSheet={{
                         borderRadius: '5px',
                         padding: '6px',
-                        // marginBottom: '4px',
-                        marginLeft: props.username == msg.from ? '32px' : '0',
-                        marginRight: props.username == msg.from ? '0' : '32px',
+                        width: '90%',
+                        alignSelf: ownMsg ? 'end' : 'start',
                         hover: {
                             backgroundColor: theme.colors.neutrals[700],
                         }
@@ -43,15 +43,16 @@ function Messages(props) {
                 >
                     <Box
                         styleSheet={{
+                            display: 'flex',
                             marginLeft: '16px',
                             marginBottom: '8px',
+                            justifyContent: ownMsg ? 'end' : 'start',
                         }}
                     >
                         <Box
                             styleSheet={{
                                 display: 'flex',
                                 flexWrap: 'wrap',
-                                justifyContent: props.username == msg.from ? 'end' : 'start',
                                 alignItems: 'center',
                             }}
                         >
@@ -90,7 +91,7 @@ function Messages(props) {
                             >
                                 {(new Date(msg.created_at).toLocaleString()).slice(0, -3)}
                             </Text>
-                            {props.username == msg.from &&
+                            {ownMsg &&
                                 <Box
                                     onClick={(e) => {
                                         e.preventDefault()
@@ -111,19 +112,25 @@ function Messages(props) {
 
                         </Box>
                     </Box>
-                    {/* {msg.text} */}
                     {msg.text.startsWith(':sticker:')
                         ? (
-                            <Image
-                                src={msg.text.replace(':sticker: ', '')}
-                                alt={msg.from}
+                            <Box
                                 styleSheet={{
+                                    display: 'flex',
                                     margin: '16px',
-                                    marginTop: '12px',
-                                    maxWidth: '160px',
-                                    maxHeight: '160px'
+                                    marginTop: '0',
+                                    justifyContent: ownMsg ? 'end' : 'start',
                                 }}
-                            />
+                            >
+                                <Image
+                                    src={msg.text.replace(':sticker: ', '')}
+                                    alt={msg.from}
+                                    styleSheet={{
+                                        maxWidth: '160px',
+                                        maxHeight: '160px'
+                                    }}
+                                />
+                            </Box>
                         )
                         : (<Box
                             styleSheet={{
@@ -133,7 +140,7 @@ function Messages(props) {
                                 wordWrap: 'break-word',
                                 overflow: 'auto',
                                 maxWidth: '100%',
-                                textAlign: props.username == msg.from ? 'right' : 'left'
+                                textAlign: ownMsg ? 'right' : 'left'
                             }}
                             dangerouslySetInnerHTML={{
                                 __html: sanitized,
@@ -143,7 +150,7 @@ function Messages(props) {
                     }
                 </Box>)
         })}
-        </Box>
+        </Box >
     )
 }
 
