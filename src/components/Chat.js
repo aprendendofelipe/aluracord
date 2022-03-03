@@ -34,7 +34,7 @@ export default function ChatPage(props) {
           display: 'flex',
           flex: 1,
           height: '40%',
-          backgroundColor: theme.colors.neutrals[600],
+          backgroundColor: theme.colors.primary[900],
           flexDirection: 'column',
           borderRadius: '5px',
           padding: '16px',

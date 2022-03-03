@@ -35,9 +35,11 @@ function Messages(props) {
                         borderRadius: '5px',
                         padding: '6px',
                         width: '90%',
+                        marginBottom: '8px',
                         alignSelf: ownMsg ? 'end' : 'start',
+                        backgroundColor: ownMsg ? theme.colors.primary[600] : theme.colors.neutrals[600],
                         hover: {
-                            backgroundColor: theme.colors.neutrals[700],
+                            backgroundColor: ownMsg ? theme.colors.primary[700] : theme.colors.neutrals[700],
                         }
                     }}
                 >
