@@ -52,7 +52,6 @@ function Messages(props) {
                         <Box
                             styleSheet={{
                                 display: 'flex',
-                                flexWrap: 'wrap',
                                 alignItems: 'center',
                             }}
                         >
@@ -62,8 +61,10 @@ function Messages(props) {
                             >
                                 <div style={{
                                     display: 'flex',
+                                    flexWrap: 'wrap',
                                     height: '48px',
                                     alignItems: 'center',
+                                    justifyContent: ownMsg ? 'end' : 'start',
                                 }}>
                                     <Image
                                         styleSheet={{
@@ -79,18 +80,18 @@ function Messages(props) {
                                     <Text tag="strong">
                                         {msg.from}
                                     </Text>
+                                    <Text
+                                        styleSheet={{
+                                            fontSize: '10px',
+                                            marginLeft: '8px',
+                                            color: theme.colors.neutrals[300],
+                                        }}
+                                        tag="span"
+                                    >
+                                        {(new Date(msg.created_at).toLocaleString()).slice(0, -3)}
+                                    </Text>
                                 </div>
                             </a>
-                            <Text
-                                styleSheet={{
-                                    fontSize: '10px',
-                                    marginLeft: '8px',
-                                    color: theme.colors.neutrals[300],
-                                }}
-                                tag="span"
-                            >
-                                {(new Date(msg.created_at).toLocaleString()).slice(0, -3)}
-                            </Text>
                             {ownMsg &&
                                 <Box
                                     onClick={(e) => {
