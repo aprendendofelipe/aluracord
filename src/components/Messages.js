@@ -1,4 +1,4 @@
-import { Box, Text, Image } from '@skynexui/components'
+import { Box, Text, Image, Button } from '@skynexui/components'
 import theme from '../styles/theme'
 import { marked } from 'marked'
 import DOMPurify from 'isomorphic-dompurify'
@@ -95,24 +95,31 @@ function Messages(props) {
                                 </div>
                             </a>
                             {ownMsg &&
-                                <Box
+                                <Button
                                     onClick={(e) => {
                                         e.preventDefault()
                                         props.handleDeleteMessage(msg)
                                     }}
                                     title={`Apagar mensagem`}
                                     styleSheet={{
+                                        backgroundColor: theme.colors.primary[600],
+                                        marginLeft: '8px',
                                         paddingTop: '16px',
                                         paddingLeft: '15px',
                                         paddingRight: '15px',
                                         paddingBottom: '10px',
                                         cursor: 'pointer',
+                                        borderRadius: '50%',
+                                        hover: {
+                                            backgroundColor: theme.colors.primary[800],
+                                        },
+                                        focus: {
+                                            backgroundColor: theme.colors.primary[800],
+                                        },
                                     }}
-                                >
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img alt='Apagar mensagem' src='/icons/trash.svg' />
-                                </Box>}
-
+                                    // eslint-disable-next-line @next/next/no-img-element
+                                    label={<img alt='Apagar mensagem' src='/icons/trash.svg' />}
+                                />}
                         </Box>
                     </Box>
                     {msg.text.startsWith(':sticker:')
