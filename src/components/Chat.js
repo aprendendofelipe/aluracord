@@ -1,10 +1,10 @@
 import { Box } from '@skynexui/components'
 import theme from '../styles/theme'
 import { DeleteMessage } from '../utils/supabase'
-import Messages from './Messages'
+import Messages from './messages/Messages'
 import Header from './Header'
 import ChatBox from './ChatBox'
-import NewMessageBox from './NewMessage'
+import NewMessageBox from './messages/NewMessage'
 
 export default function ChatPage(props) {
 

@@ -1,8 +1,8 @@
 import { Box, TextField, Button } from '@skynexui/components'
 import { useState } from 'react'
-import theme from '../styles/theme'
-import { ButtonSendSticker } from './ButtonSendSticker'
-import { SaveNewMessage } from '../utils/supabase'
+import theme from '../../styles/theme'
+import { ButtonSendSticker } from '../ButtonSendSticker'
+import { SaveNewMessage } from '../../utils/supabase'
 
 export default function NewMessageBox({ username }) {
     const [newMessage, setNewMessage] = useState('')
