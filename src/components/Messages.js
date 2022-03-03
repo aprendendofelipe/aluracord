@@ -33,7 +33,9 @@ function Messages(props) {
                     styleSheet={{
                         borderRadius: '5px',
                         padding: '6px',
-                        marginBottom: '12px',
+                        // marginBottom: '4px',
+                        marginLeft: props.username == msg.from ? '32px' : '0',
+                        marginRight: props.username == msg.from ? '0' : '32px',
                         hover: {
                             backgroundColor: theme.colors.neutrals[700],
                         }
@@ -41,6 +43,7 @@ function Messages(props) {
                 >
                     <Box
                         styleSheet={{
+                            marginLeft: '16px',
                             marginBottom: '8px',
                         }}
                     >
@@ -48,49 +51,64 @@ function Messages(props) {
                             styleSheet={{
                                 display: 'flex',
                                 flexWrap: 'wrap',
-                                justifyContent: 'space-between',
-                                flex: '1',
+                                justifyContent: props.username == msg.from ? 'end' : 'start',
+                                alignItems: 'center',
                             }}
                         >
-                            <Box>
-                                <Image
-                                    styleSheet={{
-                                        width: '20px',
-                                        height: '20px',
-                                        borderRadius: '50%',
-                                        display: 'inline-block',
-                                        marginRight: '8px',
-                                    }}
-                                    alt={'De:'}
-                                    src={`https://github.com/${msg.from}.png`}
-                                />
-                                <Text tag="strong">
-                                    {msg.from}
-                                </Text>
-                                <Text
-                                    styleSheet={{
-                                        fontSize: '10px',
-                                        marginLeft: '8px',
-                                        color: theme.colors.neutrals[300],
-                                    }}
-                                    tag="span"
-                                >
-                                    {(new Date(msg.created_at).toLocaleString()).slice(0, -3)}
-                                </Text>
-                            </Box>
-                            {props.username == msg.from && <Box
-                                onClick={(e) => {
-                                    e.preventDefault()
-                                    props.handleDeleteMessage(msg)
-                                }}
-                                title={`Apagar mensagem`}
-                                styleSheet={{
-                                    padding: '2px',
-                                    cursor: 'pointer',
-                                }}
+                            <a
+                                href={`https://alurakut-zeta-six.vercel.app/users/${msg.from}`}
+                                target="_blank" rel="noreferrer noopener nofollow"
                             >
-                                🗑️
-                            </Box>}
+                                <div style={{
+                                    display: 'flex',
+                                    height: '48px',
+                                    alignItems: 'center',
+                                }}>
+                                    <Image
+                                        styleSheet={{
+                                            width: '26px',
+                                            height: '26px',
+                                            borderRadius: '50%',
+                                            display: 'inline-block',
+                                            marginRight: '8px',
+                                        }}
+                                        alt={'De:'}
+                                        src={`https://github.com/${msg.from}.png`}
+                                    />
+                                    <Text tag="strong">
+                                        {msg.from}
+                                    </Text>
+                                </div>
+                            </a>
+                            <Text
+                                styleSheet={{
+                                    fontSize: '10px',
+                                    marginLeft: '8px',
+                                    color: theme.colors.neutrals[300],
+                                }}
+                                tag="span"
+                            >
+                                {(new Date(msg.created_at).toLocaleString()).slice(0, -3)}
+                            </Text>
+                            {props.username == msg.from &&
+                                <Box
+                                    onClick={(e) => {
+                                        e.preventDefault()
+                                        props.handleDeleteMessage(msg)
+                                    }}
+                                    title={`Apagar mensagem`}
+                                    styleSheet={{
+                                        paddingTop: '16px',
+                                        paddingLeft: '15px',
+                                        paddingRight: '15px',
+                                        paddingBottom: '10px',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                                    <img alt='Apagar mensagem' src='/icons/trash.svg' />
+                                </Box>}
+
                         </Box>
                     </Box>
                     {/* {msg.text} */}
@@ -100,6 +118,8 @@ function Messages(props) {
                                 src={msg.text.replace(':sticker: ', '')}
                                 alt={msg.from}
                                 styleSheet={{
+                                    margin: '16px',
+                                    marginTop: '12px',
                                     maxWidth: '160px',
                                     maxHeight: '160px'
                                 }}
@@ -107,9 +127,13 @@ function Messages(props) {
                         )
                         : (<Box
                             styleSheet={{
+                                margin: '16px',
+                                marginTop: '-16px',
+                                marginBottom: '0',
                                 wordWrap: 'break-word',
                                 overflow: 'auto',
-                                maxWidth: '100%'
+                                maxWidth: '100%',
+                                textAlign: props.username == msg.from ? 'right' : 'left'
                             }}
                             dangerouslySetInnerHTML={{
                                 __html: sanitized,
