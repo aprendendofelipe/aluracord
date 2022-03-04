@@ -4,15 +4,26 @@ import theme from '../styles/theme'
 import { useState } from 'react'
 import Header from './Header'
 import { SaveNewServer } from '../utils/supabase'
+import useDebounce from '../hooks/useAdaptiveDebounce'
 
-export default function AddSrvPage(props) {
+const MAXLENGTH = 40
+
+export default function AddSrvPage() {
   const [name, setName] = useState("")
   const [url, setUrl] = useState("")
-  const [imgSrc, setImgSrc] = useState("")
   const [autoUser, setAutoUser] = useState(false)
+  const {
+    entry: entryImgSrc,
+    setEntry: setImgSrc,
+    debounced: imgSrc,
+    status
+  } = useDebounce({
+    defaultEntry: "",
+    defaultReturn: "",
+  })
 
   async function handleAddServer() {
-    if (name && url && imgSrc) {
+    if (name && url && imgSrc && name.length <= MAXLENGTH) {
       const server = {
         name,
         url,
@@ -21,6 +32,12 @@ export default function AddSrvPage(props) {
       }
       await SaveNewServer(server)
       alert('Dados do servidor enviados para revisão')
+      setImgSrc('')
+      setName('')
+      setUrl('')
+      setAutoUser(false)
+    } else {
+      alert('Dados do servidor incorretos')
     }
   }
 
@@ -54,49 +71,61 @@ export default function AddSrvPage(props) {
             alignItems: 'flex-start',
           }}
         >
-          <p>Nome que aparecerá no rodapé ao acessar o seu servidor:</p>
           <TextField
+            label={'Nome do servidor:'}
+            maxLength={MAXLENGTH}
+            counter={true}
             value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Nome do servidor"
+            onChange={(e) => setName(e.target.value.slice(0, MAXLENGTH))}
+            placeholder='Aparecerá no rodapé ao acessar o seu servidor'
             type="textarea"
             styleSheet={textfield}
+            textFieldColors={textFieldColors}
           />
-          <p>URL (se for o caso, inclua <b>/chat?username=</b> no final):</p>
           <TextField
+            label={'URL (se for o caso, inclua /chat?username= no final):'}
             value={url}
             onChange={(e) => setUrl(e.target.value)}
             placeholder="https://discordia-gamma.vercel.app/chat?username="
             type="textarea"
             styleSheet={textfield}
+            textFieldColors={textFieldColors}
           />
-          <p>URL da imagem (irá aparecer na lista de servidores):</p>
           <TextField
-            value={imgSrc}
-            onChange={(e) => setImgSrc(e.target.value)}
-            placeholder="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
-            type="textarea"
-            styleSheet={{ ...textfield, height: '50px' }}
-          />
-          <div className='imgSrv'>
-            {imgSrc && <img
-              src={imgSrc}
-              alt={'Insira uma imagem válida'}
-            />}
-          </div>
-          <p>Marque se seu sevidor identifica qual é o usuário via <b>useRouter.query</b>?</p>
-          <TextField
+            label={'Marque se seu servidor identifica qual é o usuário via useRouter().query'}
             checked={autoUser}
             onChange={(e) => setAutoUser(e.target.checked)}
             type="checkbox"
             styleSheet={{
+              ...textfield,
               width: '100%',
               height: '18px',
             }}
+            textFieldColors={textFieldColors}
           />
+          <div className='imgSrvBox'>
+            <TextField
+              label={'URL da imagem (irá aparecer na lista de servidores):'}
+              value={entryImgSrc}
+              onChange={(e) => setImgSrc(e.target.value)}
+              placeholder="https://virtualbackgrounds.site/wp-content/uploads/2020/08/the-matrix-digital-rain.jpg"
+              type="textarea"
+              styleSheet={textfield}
+              textFieldColors={textFieldColors}
+            />
+            <div className='imgSrvMaskExt'>
+              <div className='imgSrvMaskInt'>
+                {imgSrc && <img
+                  className='imgSrv'
+                  src={imgSrc}
+                  alt={'Insira uma imagem válida'}
+                />}
+              </div>
+            </div>
+          </div>
           <Button
             type='button'
-            label='Salvar Servidor'
+            label='Salvar dados do Servidor'
             onClick={() => handleAddServer()}
             buttonColors={{
               contrastColor: theme.colors.neutrals["000"],
@@ -107,6 +136,7 @@ export default function AddSrvPage(props) {
             styleSheet={{
               height: '34px',
               marginBottom: '8px',
+              alignSelf: 'center',
             }}
           />
         </Box>
@@ -116,6 +146,7 @@ export default function AddSrvPage(props) {
           styleSheet={{
             width: '280px',
             maxWidth: '80%',
+            height: '100%',
             maxHeight: '160px',
             borderRadius: '5px',
             padding: '10px',
@@ -129,7 +160,6 @@ export default function AddSrvPage(props) {
           flex-direction: column;
           flex: 1;
           border-radius: 5px;
-          color: ${theme.colors.primary[100]};
           background-color: ${theme.colors.neutrals[700]};
           height: 100%;
           max-height: 100%;
@@ -142,24 +172,31 @@ export default function AddSrvPage(props) {
         h2 {
           font-size: 20px;
         }
-        p {
-          padding-top: 10px;
-          font-size: 14px;
+        .imgSrvBox {
+          display: flex;
+          width: 100%;
         }
-        button {
-          align-self: flex-end;
+        .imgSrvMaskExt {
+          display: flex;
+          height: 56px;
+          width: 56px;
+          border-radius: 50%;
+          align-self: center;
+          margin-bottom: 16px;
+          background-color: ${theme.colors.primary[200]}
         }
-        .imgSrv {
+        .imgSrvMaskInt {
           display: flex;
           height: 48px;
           width: 48px;
           border-radius: 50%;
+          margin: 4px;
           align-self: center;
           overflow: hidden;
           align-items: center;
           justify-content: center;
         }
-        img {
+        .imgSrv {
           height: 100%;
         }
         @media(min-width: 640px) {
@@ -181,7 +218,14 @@ const textfield = {
   borderRadius: '5px',
   padding: '6px 8px',
   backgroundColor: theme.colors.neutrals[800],
-  height: '34px',
+  height: '50px',
   marginRight: '12px',
+  marginBottom: '16px',
   color: theme.colors.neutrals[200],
+}
+
+const textFieldColors = {
+  neutral: {
+    textColor: theme.colors.neutrals[300],
+  }
 }

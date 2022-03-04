@@ -1,7 +1,8 @@
 {
     "name": "Discórdia Servidores",
     "short_name": "Discórdia",
-    "start_url": ".",
+    "start_url": "/",
+    "description": "Agregador de servidores Aluracord",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
@@ -16,5 +17,5 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "browser"
+    "display": "fullscreen"
 }
