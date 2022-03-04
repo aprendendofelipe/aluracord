@@ -19,7 +19,7 @@ export default function ButtonDeleteMsg({ handleDeleteMessage, msg }) {
         margin-right: 8px;
         padding: 13px;
         cursor: pointer;
-        border-radius: 50%;
+        border-radius: 5px;
         border: 0;
       }
       .ButtonDeleteMsg:hover {

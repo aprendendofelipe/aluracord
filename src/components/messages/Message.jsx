@@ -18,7 +18,7 @@ export default function Message({ message, username, handleDeleteMessage }) {
     const sanitized = DOMPurify.sanitize(markdown, { ADD_ATTR: ['target'] })
     const ownMsg = username == message.from
 
-    return (
+    return (<>
         <Box
             key={message.id}
             tag="li"
@@ -52,43 +52,34 @@ export default function Message({ message, username, handleDeleteMessage }) {
                         alignItems: 'center',
                     }}
                 >
-                    <a
+                    <a className='ProfileUserLink'
                         href={`https://alurakut-zeta-six.vercel.app/users/${message.from}`}
                         target="_blank" rel="noreferrer noopener nofollow"
                     >
-                        <div style={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            height: '48px',
-                            marginLeft: '16px',
-                            alignItems: 'center',
-                            justifyContent: ownMsg ? 'end' : 'start',
-                        }}>
-                            <Image
-                                styleSheet={{
-                                    width: '26px',
-                                    height: '26px',
-                                    borderRadius: '50%',
-                                    display: 'inline-block',
-                                    marginRight: '8px',
-                                }}
-                                alt={'De:'}
-                                src={`https://github.com/${message.from}.png`}
-                            />
-                            <Text tag="strong">
-                                {message.from}
-                            </Text>
-                            <Text
-                                styleSheet={{
-                                    fontSize: '10px',
-                                    marginLeft: '8px',
-                                    color: theme.colors.neutrals[300],
-                                }}
-                                tag="span"
-                            >
-                                {(new Date(message.created_at).toLocaleString()).slice(0, -3)}
-                            </Text>
-                        </div>
+                        <Image
+                            styleSheet={{
+                                width: '26px',
+                                height: '26px',
+                                borderRadius: '50%',
+                                display: 'inline-block',
+                                marginRight: '8px',
+                            }}
+                            alt={'De:'}
+                            src={`https://github.com/${message.from}.png`}
+                        />
+                        <Text tag="strong">
+                            {message.from}
+                        </Text>
+                        <Text
+                            styleSheet={{
+                                fontSize: '10px',
+                                marginLeft: '8px',
+                                color: theme.colors.neutrals[300],
+                            }}
+                            tag="span"
+                        >
+                            {(new Date(message.created_at).toLocaleString()).slice(0, -3)}
+                        </Text>
                     </a>
                 </Box>
             </Box>
@@ -129,5 +120,25 @@ export default function Message({ message, username, handleDeleteMessage }) {
                 />
                 )
             }
-        </Box>)
+        </Box>
+        <style jsx>{`
+                            .ProfileUserLink {
+                                display: flex;
+                                flex-wrap: wrap;
+                                height: 48px;
+                                margin-left: 12px;
+                                align-items: center;
+                                justify-content: ${ownMsg ? 'end' : 'start'};
+                                border-radius: 5px;
+                                padding: 4px;
+                            }
+                            .ProfileUserLink:hover {
+                                background-color: ${theme.colors.primary[900]};
+                            }
+                            .ProfileUserLink:focus {
+                                background-color: ${theme.colors.primary[900]};
+                            }
+                            `}
+        </style>
+    </>)
 }
