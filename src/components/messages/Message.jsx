@@ -27,12 +27,12 @@ export default function Message({ message, username, handleDeleteMessage }) {
             styleSheet={{
                 borderRadius: '5px',
                 padding: '6px',
-                width: '90%',
+                maxWidth: '95%',
                 marginBottom: '8px',
                 alignSelf: ownMsg ? 'end' : 'start',
                 backgroundColor: ownMsg ? theme.colors.primary[700] : theme.colors.neutrals[600],
                 hover: {
-                    backgroundColor: ownMsg ? theme.colors.primary[600] : theme.colors.neutrals[700],
+                    backgroundColor: ownMsg ? theme.colors.primary[300] : theme.colors.neutrals[700],
                 }
             }}
         >
@@ -45,7 +45,7 @@ export default function Message({ message, username, handleDeleteMessage }) {
                 }}
             >
                 {ownMsg &&
-                    (isInTheBox ? <ButtonDeleteMsg handleDeleteMessage={handleDeleteMessage} msg={message} /> : <div></div>)}
+                    (isInTheBox ? <ButtonDeleteMsg handleDeleteMessage={handleDeleteMessage} msg={message} /> : <div style={{ width: '48px' }}></div>)}
                 <Box
                     styleSheet={{
                         display: 'flex',
@@ -100,6 +100,7 @@ export default function Message({ message, username, handleDeleteMessage }) {
                             margin: '16px',
                             marginTop: '0',
                             justifyContent: ownMsg ? 'end' : 'start',
+                            overflow: 'auto',
                         }}
                     >
                         <Image
