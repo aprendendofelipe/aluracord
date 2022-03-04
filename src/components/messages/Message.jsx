@@ -2,6 +2,8 @@ import { Box, Text, Image, Button } from '@skynexui/components'
 import theme from '../../styles/theme'
 import { marked } from 'marked'
 import DOMPurify from 'isomorphic-dompurify'
+import ButtonDeleteMsg from '../ButtonDeleteMsg'
+import { useState } from 'react'
 
 const renderer = new marked.Renderer()
 const linkRenderer = renderer.link
@@ -10,15 +12,18 @@ renderer.link = (href, title, text) => {
     return html.replace(/^<a /, `<a target="_blank" rel="noreferrer noopener nofollow" `)
 }
 
-export default function Message({ key, message, username, handleDeleteMessage }) {
+export default function Message({ message, username, handleDeleteMessage }) {
+    const [isInTheBox, setIsInTheBox] = useState(false)
     const markdown = marked.parse(message.text, { renderer: renderer })
     const sanitized = DOMPurify.sanitize(markdown, { ADD_ATTR: ['target'] })
     const ownMsg = username == message.from
 
     return (
         <Box
-            key={key}
+            key={message.id}
             tag="li"
+            onMouseEnter={() => setIsInTheBox(true)}
+            onMouseLeave={() => setIsInTheBox(false)}
             styleSheet={{
                 borderRadius: '5px',
                 padding: '6px',
@@ -39,7 +44,8 @@ export default function Message({ key, message, username, handleDeleteMessage })
                     justifyContent: 'space-between',
                 }}
             >
-                {ownMsg && <DeleteButton handleDeleteMessage={handleDeleteMessage} msg={message} />}
+                {ownMsg &&
+                    (isInTheBox ? <ButtonDeleteMsg handleDeleteMessage={handleDeleteMessage} msg={message} /> : <div></div>)}
                 <Box
                     styleSheet={{
                         display: 'flex',
@@ -123,31 +129,4 @@ export default function Message({ key, message, username, handleDeleteMessage })
                 )
             }
         </Box>)
-}
-
-function DeleteButton({ handleDeleteMessage, msg }) {
-    return (
-        <Button
-            onClick={(e) => {
-                e.preventDefault()
-                handleDeleteMessage(msg)
-            }}
-            title={`Apagar mensagem`}
-            styleSheet={{
-                backgroundColor: theme.colors.primary[700],
-                marginRight: '8px',
-                padding: '13px',
-                cursor: 'pointer',
-                borderRadius: '50%',
-                hover: {
-                    backgroundColor: theme.colors.primary[900],
-                },
-                focus: {
-                    backgroundColor: theme.colors.primary[900],
-                },
-            }}
-            // eslint-disable-next-line @next/next/no-img-element
-            label={<img alt='Apagar mensagem' src='/icons/trash.svg' />}
-        />
-    )
 }
