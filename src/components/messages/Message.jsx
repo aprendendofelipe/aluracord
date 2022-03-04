@@ -14,6 +14,7 @@ renderer.link = (href, title, text) => {
 
 export default function Message({ message, username, handleDeleteMessage }) {
     const [isInTheBox, setIsInTheBox] = useState(false)
+    const [isFocused, setIsFocused] = useState(false)
     const markdown = marked.parse(message.text, { renderer: renderer })
     const sanitized = DOMPurify.sanitize(markdown, { ADD_ATTR: ['target'] })
     const ownMsg = username == message.from
@@ -24,6 +25,8 @@ export default function Message({ message, username, handleDeleteMessage }) {
             tag="li"
             onMouseEnter={() => setIsInTheBox(true)}
             onMouseLeave={() => setIsInTheBox(false)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => setIsFocused(false)}
             styleSheet={{
                 borderRadius: '5px',
                 padding: '6px',
@@ -45,7 +48,7 @@ export default function Message({ message, username, handleDeleteMessage }) {
                 }}
             >
                 {ownMsg &&
-                    (isInTheBox ? <ButtonDeleteMsg handleDeleteMessage={handleDeleteMessage} msg={message} /> : <div style={{ width: '48px' }}></div>)}
+                    ((isInTheBox || isFocused) ? <ButtonDeleteMsg handleDeleteMessage={handleDeleteMessage} msg={message} /> : <div style={{ width: '48px' }}></div>)}
                 <Box
                     styleSheet={{
                         display: 'flex',
